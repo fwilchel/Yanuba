@@ -1,0 +1,133 @@
+02 00000029 00000B48 00000000 00000003 00000000 00000000 .\interfaz2_app.dbf 
+03 00000B48 00001308 00000000 00000015 00000000 00000000 .\interfaz2_app.fpt 
+04 00001400 00003C00 00000000 00000027 00000000 00000000 .\interfaz2_app.cdx 
+08 00003C00 00004C62 00000039 0000003F 00000000 00000000 libs\interfaz2_app.vcx 
+03 00004C62 00007452 00000039 00000051 00000000 00000000 libs\interfaz2_app.vct 
+08 00007452 0000A731 00000063 000000A0 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\wizards\_framewk.vcx 
+03 0000A731 0003529E 00000063 000000AD 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\wizards\_framewk.vct 
+08 0003529E 00036E7F 000000BA 000000F3 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\ffc\_base.vcx 
+03 00036E7F 0005C093 000000BA 000000FD 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\ffc\_base.vct 
+08 0005C093 0005C94B 000000BA 00000048 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\ffc\_app.vcx 
+03 0005C94B 000650FE 000000BA 0000005A 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\ffc\_app.vct 
+08 000650FE 00065802 000000BA 00000107 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\ffc\_ui.vcx 
+03 00065802 00067ECA 000000BA 0000010F 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\ffc\_ui.vct 
+08 00067ECA 0006A1E8 000000BA 00000117 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\ffc\_table.vcx 
+03 0006A1E8 0007BFD7 000000BA 00000122 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\ffc\_table.vct 
+00 0007BFD7 0007D29A 0000012D 00000150 00000000 00000000 c:\users\fredy\appdata\local\temp\interfaz2_main.mpx 
+00 0007D29A 0007D652 0000012D 00000163 00000000 00000000 c:\users\fredy\appdata\local\temp\interfaz2_go.mpx 
+00 0007D652 0007DC4D 0000012D 00000174 00000000 00000000 c:\users\fredy\appdata\local\temp\interfaz2_app.fxp 
+08 0007DC4D 0007F017 000000BA 00000186 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\ffc\_reports.vcx 
+03 0007F017 0008B79B 000000BA 00000193 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\ffc\_reports.vct 
+00 0008B79B 0008BF52 0000012D 000001A0 00000000 00000000 c:\users\fredy\appdata\local\temp\setobjrf.fxp 
+06 0008BF52 0008C0B8 000001AD 000001F3 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\browse.bmp 
+06 0008C0B8 0008C21E 000001AD 000001FE 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\browse.msk 
+06 0008C21E 0008C360 000001AD 00000209 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\top.bmp 
+06 0008C360 0008C4A2 000001AD 00000211 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\top.msk 
+06 0008C4A2 0008C5E4 000001AD 00000219 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\previous.bmp 
+06 0008C5E4 0008C726 000001AD 00000226 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\previous.msk 
+06 0008C726 0008C868 000001AD 00000233 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\next.bmp 
+06 0008C868 0008C9AA 000001AD 0000023C 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\next.msk 
+06 0008C9AA 0008CAEC 000001AD 00000245 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\bottom.bmp 
+06 0008CAEC 0008CC2E 000001AD 00000250 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\bottom.msk 
+06 0008CC2E 0008CD24 000001AD 0000025B 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\sortasc.bmp 
+06 0008CD24 0008CE1A 000001AD 00000267 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\sortasc.msk 
+06 0008CE1A 0008CF10 000001AD 00000273 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\sortdes.bmp 
+06 0008CF10 0008D006 000001AD 0000027F 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\sortdes.msk 
+06 0008D006 0008D0F4 000001AD 0000028B 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\filter.bmp 
+06 0008D0F4 0008D1E2 000001AD 00000296 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\filter.msk 
+06 0008D1E2 0008D708 000001AD 000002A1 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\new.bmp 
+06 0008D708 0008DC2E 000001AD 000002A9 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\new.msk 
+06 0008DC2E 0008E154 000001AD 000002B1 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\open.bmp 
+06 0008E154 0008E67A 000001AD 000002BA 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\open.msk 
+06 0008E67A 0008EBA0 000001AD 000002C3 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\save.bmp 
+06 0008EBA0 0008F0C6 000001AD 000002CC 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\save.msk 
+06 0008F0C6 0008F5EC 000001AD 000002D5 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\revert.bmp 
+06 0008F5EC 0008FB12 000001AD 000002E0 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\revert.msk 
+06 0008FB12 00090038 000001AD 000002EB 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\print.bmp 
+06 00090038 0009055E 000001AD 000002F5 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\print.msk 
+06 0009055E 00090A84 000001AD 000002FF 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\cut.bmp 
+06 00090A84 00090FAA 000001AD 00000307 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\cut.msk 
+06 00090FAA 000914D0 000001AD 0000030F 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\copy.bmp 
+06 000914D0 000919F6 000001AD 00000318 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\copy.msk 
+06 000919F6 00091F1C 000001AD 00000321 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\paste.bmp 
+06 00091F1C 00092442 000001AD 0000032B 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\paste.msk 
+06 00092442 00092538 000001AD 00000335 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\help.bmp 
+06 00092538 0009262E 000001AD 0000033E 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\help.msk 
+09 0009262E 0009346F 00000347 0000034E 00000000 00000000 forms\fondo.scx 
+03 0009346F 000956D7 00000347 00000358 00000000 00000000 forms\fondo.sct 
+00 000956D7 0009581F 0000012D 00000362 00000000 00000000 c:\users\fredy\appdata\local\temp\iniciar.fxp 
+08 0009581F 00097E38 00000063 0000036E 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\wizards\wizbtns.vcx 
+03 00097E38 000B0438 00000063 0000037A 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\wizards\wizbtns.vct 
+08 000B0438 000B0C16 00000063 00000386 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\wizards\wizbase.vcx 
+03 000B0C16 000B3C56 00000063 00000392 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\wizards\wizbase.vct 
+06 000B3C56 000B3DBC 0000039E 000003E3 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\wizards\wizbmps\wzlocate.bmp 
+06 000B3DBC 000B3F22 0000039E 000003F0 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\wizards\wizbmps\wzprint.bmp 
+06 000B3F22 000B4088 0000039E 000003FC 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\wizards\wizbmps\wzclose.bmp 
+06 000B4088 000B41EE 0000039E 00000408 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\wizards\wizbmps\wznew.bmp 
+06 000B41EE 000B4354 0000039E 00000412 00000000 00000000 ..\..\program files (x86)\microsoft visual foxpro 7\wizards\wizbmps\wzdelete.bmp 
+09 000B4354 000B4E2D 00000347 0000041F 00000000 00000000 forms\departamentos.scx 
+03 000B4E2D 000B60E7 00000347 00000431 00000000 00000000 forms\departamentos.sct 
+06 000B60E7 000C113F 000001E9 00000443 00000000 00000000 graphics\logo2.jpg 
+09 000C113F 000C1DCC 00000347 0000044D 00000000 00000000 forms\impuestos.scx 
+03 000C1DCC 000C32E1 00000347 0000045B 00000000 00000000 forms\impuestos.sct 
+09 000C32E1 000C3DBA 00000347 00000469 00000000 00000000 forms\proveedores.scx 
+03 000C3DBA 000C5283 00000347 00000479 00000000 00000000 forms\proveedores.sct 
+09 000C5283 000C5F10 00000347 00000489 00000000 00000000 forms\marcas.scx 
+03 000C5F10 000C747C 00000347 00000494 00000000 00000000 forms\marcas.sct 
+09 000C747C 000C8109 00000347 0000049F 00000000 00000000 forms\formaspago.scx 
+03 000C8109 000C9682 00000347 000004AE 00000000 00000000 forms\formaspago.sct 
+00 000C9682 000D1B0C 0000012D 000004BD 00000000 00000000 c:\users\fredy\appdata\local\temp\generar.fxp 
+00 000D1B0C 000D42F5 0000012D 000004C9 00000000 00000000 c:\users\fredy\appdata\local\temp\corregir.fxp 
+09 000D42F5 000D4F82 00000347 000004D6 00000000 00000000 forms\almacenes.scx 
+03 000D4F82 000D67BC 00000347 000004E4 00000000 00000000 forms\almacenes.sct 
+09 000D67BC 000D8B47 00000347 000004F2 00000000 00000000 forms\config.scx 
+03 000D8B47 000DD194 00000347 000004FD 00000000 00000000 forms\config.sct 
+09 000DD194 000DDEFB 00000347 00000508 00000000 00000000 forms\generar.scx 
+03 000DDEFB 000DF56F 00000347 00000514 00000000 00000000 forms\generar.sct 
+09 000DF56F 000E0048 00000347 00000520 00000000 00000000 forms\secciones.scx 
+03 000E0048 000E1316 00000347 0000052E 00000000 00000000 forms\secciones.sct 
+00 000E1316 000E35AA 0000012D 0000053C 00000000 00000000 c:\users\fredy\appdata\local\temp\vistas.fxp 
+00 000E35AA 000E36E9 0000012D 00000547 00000000 00000000 c:\users\fredy\appdata\local\temp\creartablaplano.fxp 
+00 000E36E9 000E390F 0000012D 0000055B 00000000 00000000 c:\users\fredy\appdata\local\temp\cargarplano.fxp 
+06 000E390F 000F7412 000001E9 0000056B 00000000 00000000 graphics\imagen.jpg 
+00 000F7412 000F7492 0000012D 00000576 00000000 00000000 c:\users\fredy\appdata\local\temp\creararchivo.fxp 
+09 000F7492 000F7FD8 00000347 00000587 00000000 00000000 forms\mediospago.scx 
+03 000F7FD8 000F934F 00000347 00000596 00000000 00000000 forms\mediospago.sct 
+09 000F934F 000FA049 00000347 000005A5 00000000 00000000 forms\articulos.scx 
+03 000FA049 000FB90E 00000347 000005B3 00000000 00000000 forms\articulos.sct 
+09 000FB90E 000FC608 00000347 000005C1 00000000 00000000 forms\conceptosdtos.scx 
+03 000FC608 000FDEA3 00000347 000005D3 00000000 00000000 forms\conceptosdtos.sct 
+00 000FDEA3 000FE03D 0000012D 000005E5 00000000 00000000 c:\users\fredy\appdata\local\temp\probarplano.fxp 
+00 000FE03D 000FE1C6 0000012D 000005F5 00000000 00000000 c:\users\fredy\appdata\local\temp\trasladoscruzada.fxp 
+09 000FE1C6 000FF5FD 00000347 0000060A 00000000 00000000 forms\traslados.scx 
+03 000FF5FD 00101D27 00000347 00000618 00000000 00000000 forms\traslados.sct 
+00 00101D27 00101DE0 0000012D 00000626 00000000 00000000 c:\users\fredy\appdata\local\temp\pasar.fxp 
+00 00101DE0 001023CC 0000012D 00000630 00000000 00000000 c:\users\fredy\appdata\local\temp\vtastraslados.fxp 
+00 001023CC 00102EDB 0000012D 00000642 00000000 00000000 c:\users\fredy\appdata\local\temp\basura.fxp 
+00 00102EDB 00103030 0000012D 0000064D 00000000 00000000 c:\users\fredy\appdata\local\temp\prueba.fxp 
+09 00103030 00103BE3 00000347 00000658 00000000 00000000 forms\conceptospago.scx 
+03 00103BE3 001050E1 00000347 0000066A 00000000 00000000 forms\conceptospago.sct 
+00 001050E1 00105225 0000012D 0000067C 00000000 00000000 c:\users\fredy\appdata\local\temp\propinas.fxp 
+09 00105225 001061AD 00000347 00000689 00000000 00000000 forms\vendedores.scx 
+03 001061AD 001087EE 00000347 00000698 00000000 00000000 forms\vendedores.sct 
+09 001087EE 00109180 00000347 000006A7 00000000 00000000 forms\roles.scx 
+03 00109180 00109F63 00000347 000006B1 00000000 00000000 forms\roles.sct 
+09 00109F63 0010AB83 00000347 000006BB 00000000 00000000 forms\porcentajes.scx 
+03 0010AB83 0010C628 00000347 000006CB 00000000 00000000 forms\porcentajes.sct 
+00 0010C628 0010EDA7 0000012D 000006DB 00000000 00000000 c:\users\fredy\appdata\local\temp\calculopropinas.fxp 
+00 0010EDA7 0010F54C 0000012D 000006EF 00000000 00000000 c:\users\fredy\appdata\local\temp\cargarhoras.fxp 
+09 0010F54C 0011038D 00000347 000006FF 00000000 00000000 forms\reservadas.scx 
+03 0011038D 00111DED 00000347 0000070E 00000000 00000000 forms\reservadas.sct 
+09 00111DED 00112F29 00000347 0000071D 00000000 00000000 forms\prueba.scx 
+03 00112F29 00114B91 00000347 00000728 00000000 00000000 forms\prueba.sct 
+09 00114B91 0011536F 00000347 00000733 00000000 00000000 forms\vendedoresreservadas.scx 
+03 0011536F 00115EB7 00000347 0000074C 00000000 00000000 forms\vendedoresreservadas.sct 
+09 00115EB7 0011713A 00000347 00000765 00000000 00000000 forms\horas.scx 
+03 0011713A 001191E4 00000347 0000076F 00000000 00000000 forms\horas.sct 
+00 001191E4 0011B2FA 0000012D 00000779 00000000 00000000 c:\users\fredy\appdata\local\temp\marcaciones.fxp 
+09 0011B2FA 0011BCF9 00000347 00000789 00000000 00000000 forms\calculopropinas.scx 
+03 0011BCF9 0011CADD 00000347 0000079D 00000000 00000000 forms\calculopropinas.sct 
+09 0011CADD 0011D549 00000347 000007B1 00000000 00000000 forms\generarextras.scx 
+03 0011D549 0011E520 00000347 000007C3 00000000 00000000 forms\generarextras.sct 
+09 0011E520 0011EDD8 00000347 000007D5 00000000 00000000 forms\festivos.scx 
+03 0011EDD8 0011FA3E 00000347 000007E2 00000000 00000000 forms\festivos.sct 

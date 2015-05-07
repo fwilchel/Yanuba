@@ -1,0 +1,133 @@
+  "interfaz2_app.dbf" ".\" 
+  "interfaz2_app.fpt" ".\" 
+  "interfaz2_app.cdx" ".\" 
+  "interfaz2_app.vcx" "libs\" libs\
+  "interfaz2_app.vct" "libs\" libs\
+  "_framewk.vcx" "..\..\program files (x86)\microsoft visual foxpro 7\wizards\" program files (x86)\microsoft visual foxpro 7\wizards\
+  "_framewk.vct" "..\..\program files (x86)\microsoft visual foxpro 7\wizards\" program files (x86)\microsoft visual foxpro 7\wizards\
+  "_base.vcx" "..\..\program files (x86)\microsoft visual foxpro 7\ffc\" program files (x86)\microsoft visual foxpro 7\ffc\
+  "_base.vct" "..\..\program files (x86)\microsoft visual foxpro 7\ffc\" program files (x86)\microsoft visual foxpro 7\ffc\
+  "_app.vcx" "..\..\program files (x86)\microsoft visual foxpro 7\ffc\" program files (x86)\microsoft visual foxpro 7\ffc\
+  "_app.vct" "..\..\program files (x86)\microsoft visual foxpro 7\ffc\" program files (x86)\microsoft visual foxpro 7\ffc\
+  "_ui.vcx" "..\..\program files (x86)\microsoft visual foxpro 7\ffc\" program files (x86)\microsoft visual foxpro 7\ffc\
+  "_ui.vct" "..\..\program files (x86)\microsoft visual foxpro 7\ffc\" program files (x86)\microsoft visual foxpro 7\ffc\
+  "_table.vcx" "..\..\program files (x86)\microsoft visual foxpro 7\ffc\" program files (x86)\microsoft visual foxpro 7\ffc\
+  "_table.vct" "..\..\program files (x86)\microsoft visual foxpro 7\ffc\" program files (x86)\microsoft visual foxpro 7\ffc\
+  "interfaz2_main.mpx" "c:\users\fredy\appdata\local\temp\" MENUS\
+  "interfaz2_go.mpx" "c:\users\fredy\appdata\local\temp\" MENUS\
+M "interfaz2_app.fxp" "c:\users\fredy\appdata\local\temp\" PROGS\
+  "_reports.vcx" "..\..\program files (x86)\microsoft visual foxpro 7\ffc\" program files (x86)\microsoft visual foxpro 7\ffc\
+  "_reports.vct" "..\..\program files (x86)\microsoft visual foxpro 7\ffc\" program files (x86)\microsoft visual foxpro 7\ffc\
+  "setobjrf.fxp" "c:\users\fredy\appdata\local\temp\" PROGS\
+  "browse.bmp" "..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\" program files (x86)\microsoft visual foxpro 7\wizards\graphics\
+  "browse.msk" "..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\" program files (x86)\microsoft visual foxpro 7\wizards\graphics\
+  "top.bmp" "..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\" program files (x86)\microsoft visual foxpro 7\wizards\graphics\
+  "top.msk" "..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\" program files (x86)\microsoft visual foxpro 7\wizards\graphics\
+  "previous.bmp" "..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\" program files (x86)\microsoft visual foxpro 7\wizards\graphics\
+  "previous.msk" "..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\" program files (x86)\microsoft visual foxpro 7\wizards\graphics\
+  "next.bmp" "..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\" program files (x86)\microsoft visual foxpro 7\wizards\graphics\
+  "next.msk" "..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\" program files (x86)\microsoft visual foxpro 7\wizards\graphics\
+  "bottom.bmp" "..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\" program files (x86)\microsoft visual foxpro 7\wizards\graphics\
+  "bottom.msk" "..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\" program files (x86)\microsoft visual foxpro 7\wizards\graphics\
+  "sortasc.bmp" "..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\" program files (x86)\microsoft visual foxpro 7\wizards\graphics\
+  "sortasc.msk" "..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\" program files (x86)\microsoft visual foxpro 7\wizards\graphics\
+  "sortdes.bmp" "..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\" program files (x86)\microsoft visual foxpro 7\wizards\graphics\
+  "sortdes.msk" "..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\" program files (x86)\microsoft visual foxpro 7\wizards\graphics\
+  "filter.bmp" "..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\" program files (x86)\microsoft visual foxpro 7\wizards\graphics\
+  "filter.msk" "..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\" program files (x86)\microsoft visual foxpro 7\wizards\graphics\
+  "new.bmp" "..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\" program files (x86)\microsoft visual foxpro 7\wizards\graphics\
+  "new.msk" "..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\" program files (x86)\microsoft visual foxpro 7\wizards\graphics\
+  "open.bmp" "..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\" program files (x86)\microsoft visual foxpro 7\wizards\graphics\
+  "open.msk" "..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\" program files (x86)\microsoft visual foxpro 7\wizards\graphics\
+  "save.bmp" "..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\" program files (x86)\microsoft visual foxpro 7\wizards\graphics\
+  "save.msk" "..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\" program files (x86)\microsoft visual foxpro 7\wizards\graphics\
+  "revert.bmp" "..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\" program files (x86)\microsoft visual foxpro 7\wizards\graphics\
+  "revert.msk" "..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\" program files (x86)\microsoft visual foxpro 7\wizards\graphics\
+  "print.bmp" "..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\" program files (x86)\microsoft visual foxpro 7\wizards\graphics\
+  "print.msk" "..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\" program files (x86)\microsoft visual foxpro 7\wizards\graphics\
+  "cut.bmp" "..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\" program files (x86)\microsoft visual foxpro 7\wizards\graphics\
+  "cut.msk" "..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\" program files (x86)\microsoft visual foxpro 7\wizards\graphics\
+  "copy.bmp" "..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\" program files (x86)\microsoft visual foxpro 7\wizards\graphics\
+  "copy.msk" "..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\" program files (x86)\microsoft visual foxpro 7\wizards\graphics\
+  "paste.bmp" "..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\" program files (x86)\microsoft visual foxpro 7\wizards\graphics\
+  "paste.msk" "..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\" program files (x86)\microsoft visual foxpro 7\wizards\graphics\
+  "help.bmp" "..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\" program files (x86)\microsoft visual foxpro 7\wizards\graphics\
+  "help.msk" "..\..\program files (x86)\microsoft visual foxpro 7\wizards\graphics\" program files (x86)\microsoft visual foxpro 7\wizards\graphics\
+  "fondo.scx" "forms\" forms\
+  "fondo.sct" "forms\" forms\
+  "iniciar.fxp" "c:\users\fredy\appdata\local\temp\" PROGS\
+  "wizbtns.vcx" "..\..\program files (x86)\microsoft visual foxpro 7\wizards\" program files (x86)\microsoft visual foxpro 7\wizards\
+  "wizbtns.vct" "..\..\program files (x86)\microsoft visual foxpro 7\wizards\" program files (x86)\microsoft visual foxpro 7\wizards\
+  "wizbase.vcx" "..\..\program files (x86)\microsoft visual foxpro 7\wizards\" program files (x86)\microsoft visual foxpro 7\wizards\
+  "wizbase.vct" "..\..\program files (x86)\microsoft visual foxpro 7\wizards\" program files (x86)\microsoft visual foxpro 7\wizards\
+  "wzlocate.bmp" "..\..\program files (x86)\microsoft visual foxpro 7\wizards\wizbmps\" program files (x86)\microsoft visual foxpro 7\wizards\wizbmps\
+  "wzprint.bmp" "..\..\program files (x86)\microsoft visual foxpro 7\wizards\wizbmps\" program files (x86)\microsoft visual foxpro 7\wizards\wizbmps\
+  "wzclose.bmp" "..\..\program files (x86)\microsoft visual foxpro 7\wizards\wizbmps\" program files (x86)\microsoft visual foxpro 7\wizards\wizbmps\
+  "wznew.bmp" "..\..\program files (x86)\microsoft visual foxpro 7\wizards\wizbmps\" program files (x86)\microsoft visual foxpro 7\wizards\wizbmps\
+  "wzdelete.bmp" "..\..\program files (x86)\microsoft visual foxpro 7\wizards\wizbmps\" program files (x86)\microsoft visual foxpro 7\wizards\wizbmps\
+  "departamentos.scx" "forms\" forms\
+  "departamentos.sct" "forms\" forms\
+  "logo2.jpg" "graphics\" graphics\
+  "impuestos.scx" "forms\" forms\
+  "impuestos.sct" "forms\" forms\
+  "proveedores.scx" "forms\" forms\
+  "proveedores.sct" "forms\" forms\
+  "marcas.scx" "forms\" forms\
+  "marcas.sct" "forms\" forms\
+  "formaspago.scx" "forms\" forms\
+  "formaspago.sct" "forms\" forms\
+  "generar.fxp" "c:\users\fredy\appdata\local\temp\" PROGS\
+  "corregir.fxp" "c:\users\fredy\appdata\local\temp\" PROGS\
+  "almacenes.scx" "forms\" forms\
+  "almacenes.sct" "forms\" forms\
+  "config.scx" "forms\" forms\
+  "config.sct" "forms\" forms\
+  "generar.scx" "forms\" forms\
+  "generar.sct" "forms\" forms\
+  "secciones.scx" "forms\" forms\
+  "secciones.sct" "forms\" forms\
+  "vistas.fxp" "c:\users\fredy\appdata\local\temp\" PROGS\
+  "creartablaplano.fxp" "c:\users\fredy\appdata\local\temp\" PROGS\
+  "cargarplano.fxp" "c:\users\fredy\appdata\local\temp\" PROGS\
+  "imagen.jpg" "graphics\" graphics\
+  "creararchivo.fxp" "c:\users\fredy\appdata\local\temp\" PROGS\
+  "mediospago.scx" "forms\" forms\
+  "mediospago.sct" "forms\" forms\
+  "articulos.scx" "forms\" forms\
+  "articulos.sct" "forms\" forms\
+  "conceptosdtos.scx" "forms\" forms\
+  "conceptosdtos.sct" "forms\" forms\
+  "probarplano.fxp" "c:\users\fredy\appdata\local\temp\" PROGS\
+  "trasladoscruzada.fxp" "c:\users\fredy\appdata\local\temp\" PROGS\
+  "traslados.scx" "forms\" forms\
+  "traslados.sct" "forms\" forms\
+  "pasar.fxp" "c:\users\fredy\appdata\local\temp\" PROGS\
+  "vtastraslados.fxp" "c:\users\fredy\appdata\local\temp\" PROGS\
+  "basura.fxp" "c:\users\fredy\appdata\local\temp\" PROGS\
+  "prueba.fxp" "c:\users\fredy\appdata\local\temp\" PROGS\
+  "conceptospago.scx" "forms\" forms\
+  "conceptospago.sct" "forms\" forms\
+  "propinas.fxp" "c:\users\fredy\appdata\local\temp\" PROGS\
+  "vendedores.scx" "forms\" forms\
+  "vendedores.sct" "forms\" forms\
+  "roles.scx" "forms\" forms\
+  "roles.sct" "forms\" forms\
+  "porcentajes.scx" "forms\" forms\
+  "porcentajes.sct" "forms\" forms\
+  "calculopropinas.fxp" "c:\users\fredy\appdata\local\temp\" PROGS\
+  "cargarhoras.fxp" "c:\users\fredy\appdata\local\temp\" PROGS\
+  "reservadas.scx" "forms\" forms\
+  "reservadas.sct" "forms\" forms\
+  "prueba.scx" "forms\" forms\
+  "prueba.sct" "forms\" forms\
+  "vendedoresreservadas.scx" "forms\" forms\
+  "vendedoresreservadas.sct" "forms\" forms\
+  "horas.scx" "forms\" forms\
+  "horas.sct" "forms\" forms\
+  "marcaciones.fxp" "c:\users\fredy\appdata\local\temp\" PROGS\
+  "calculopropinas.scx" "forms\" forms\
+  "calculopropinas.sct" "forms\" forms\
+  "generarextras.scx" "forms\" forms\
+  "generarextras.sct" "forms\" forms\
+  "festivos.scx" "forms\" forms\
+  "festivos.sct" "forms\" forms\

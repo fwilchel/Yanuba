@@ -1,0 +1,215 @@
+*       *********************************************************
+*       *                                                         
+*       * 04/27/15         INTERFAZ2_MAIN.MPR           10:29:35  
+*       *                                                         
+*       *********************************************************
+*       *                                                         
+*       * Fredy Wilches                                           
+*       *                                                         
+*       * Copyright (C) 2015 Soft Studio Ltda                     
+*       * ReFox XII  CO125117                                     
+*       * Ciudad,     Código pos                                  
+*       * País                                              
+*       *                                                         
+*       * Descripción:                                            
+*       * Este programa se generó automáticamente por GENMENU.    
+*       *                                                         
+*       *********************************************************
+
+
+*       *********************************************************
+*       *                                                         
+*       *                    Definición de menú                   
+*       *                                                         
+*       *********************************************************
+*
+
+SET SYSMENU TO
+SET SYSMENU AUTOMATIC
+
+DEFINE PAD _MSM_FILE OF _MSYSMENU PROMPT "\<Archivo" COLOR SCHEME 3 ;
+	NEGOTIATE  LEFT, NONE ;
+	KEY ALT+A, "" ;
+	MESSAGE "Crea, abre, guarda, imprime archivos o sale "+goapp.ccaption+""
+DEFINE PAD _MSM_EDIT OF _MSYSMENU PROMPT "\<Modificar" COLOR SCHEME 3 ;
+	KEY ALT+M, "" ;
+	MESSAGE "Modifica texto o la selección actual"
+DEFINE PAD _MSM_WINDO OF _MSYSMENU PROMPT "\<Ventana" COLOR SCHEME 3 ;
+	NEGOTIATE  RIGHT, NONE ;
+	KEY ALT+V, ""
+DEFINE PAD _MSM_SYSTM OF _MSYSMENU PROMPT "Ay\<uda" COLOR SCHEME 3 ;
+	KEY ALT+U, ""
+ON PAD _MSM_FILE OF _MSYSMENU ACTIVATE POPUP _mfile
+ON PAD _MSM_EDIT OF _MSYSMENU ACTIVATE POPUP _medit
+ON PAD _MSM_WINDO OF _MSYSMENU ACTIVATE POPUP _mwindow
+ON PAD _MSM_SYSTM OF _MSYSMENU ACTIVATE POPUP _msystem
+
+DEFINE POPUP _mfile MARGIN RELATIVE SHADOW COLOR SCHEME 4
+DEFINE BAR 1 OF _mfile PROMPT "\<Nuevo..." ;
+	MESSAGE "Crea un documento"
+DEFINE BAR 2 OF _mfile PROMPT "\<Abrir..." ;
+	MESSAGE "Abre un documento"
+DEFINE BAR 3 OF _mfile PROMPT "\<Cerrar" ;
+	SKIP FOR TYPE("_SCREEN.Activeform")<>"O" .OR. _SCREEN.activeform.showwindow=2 ;
+	MESSAGE "Cierra el formulario activo"
+DEFINE BAR 4 OF _mfile PROMPT "\-"
+DEFINE BAR 5 OF _mfile PROMPT "\<Guardar" ;
+	SKIP FOR EMPTY(AUSED(latemp)) ;
+	MESSAGE "Guarda la modificación en el formulario o conjunto de formularios actual"
+DEFINE BAR 6 OF _mfile PROMPT "Re\<vertir" ;
+	SKIP FOR EMPTY(AUSED(latemp)) ;
+	MESSAGE "Deshace la modificación en el formulario o conjunto de formularios actual"
+DEFINE BAR 7 OF _mfile PROMPT "\-"
+DEFINE BAR 8 OF _mfile PROMPT "I\<mprimir..." ;
+	SKIP FOR EMPTY(AUSED(latemp)) ;
+	MESSAGE "Imprime los datos actuales"
+DEFINE BAR 9 OF _mfile PROMPT "Im\<primir informes..." ;
+	MESSAGE "Selecciona un informe"
+DEFINE BAR 10 OF _mfile PROMPT "Conf\<igurar impresión..."
+DEFINE BAR 11 OF _mfile PROMPT "\-"
+DEFINE BAR 12 OF _mfile PROMPT "\<Tutorial..." ;
+	MESSAGE "Selecciona un formulario o documento de informe para ejecutarlo"
+DEFINE BAR 13 OF _mfile PROMPT "Inicio de sesión de \<usuario..." ;
+	MESSAGE "Inicie una sesión como un usuario diferente"
+DEFINE BAR 14 OF _mfile PROMPT "\-"
+DEFINE BAR 15 OF _mfile PROMPT "\<Salir" ;
+	MESSAGE "Salir "+goapp.ccaption+""
+ON SELECTION BAR 1 OF _mfile goapp.donewopen(.T.)
+ON SELECTION BAR 2 OF _mfile goapp.donewopen()
+ON SELECTION BAR 3 OF _mfile IIF(goapp.querydatasessionunload(),goapp.releaseform(),.T.)
+ON SELECTION BAR 5 OF _mfile goapp.dataupdate()
+ON SELECTION BAR 6 OF _mfile goapp.datarevert()
+ON SELECTION BAR 8 OF _mfile goapp.dotableoutput()
+ON SELECTION BAR 9 OF _mfile goapp.doreportdialog()
+ON SELECTION BAR 10 OF _mfile SET PRINTER TO NAME (SYS(1037))
+ON SELECTION BAR 12 OF _mfile goapp.dostartupform()
+ON SELECTION BAR 13 OF _mfile IIF(goapp.releaseforms(),IIF(goapp.setcurrentuser(.T.),.T., goapp.RELEASE()),.T.)
+ON SELECTION BAR 15 OF _mfile goapp.RELEASE()
+
+DEFINE POPUP _medit MARGIN RELATIVE SHADOW COLOR SCHEME 4
+DEFINE BAR _MED_UNDO OF _medit PROMPT "\<Deshacer" ;
+	KEY CTRL+Z, "Ctrl+Z" ;
+	MESSAGE "Deshace el último comando o acción"
+DEFINE BAR _MED_REDO OF _medit PROMPT "Re\<hacer" ;
+	KEY CTRL+R, "Ctrl+R" ;
+	MESSAGE "Repite el último comando o la última acción"
+DEFINE BAR _MED_SP100 OF _medit PROMPT "\-"
+DEFINE BAR _MED_CUT OF _medit PROMPT "Co\<rtar" ;
+	KEY CTRL+X, "Ctrl+X" ;
+	MESSAGE "Quita la selección y la coloca en el Portapapeles"
+DEFINE BAR _MED_COPY OF _medit PROMPT "\<Copiar" ;
+	KEY CTRL+C, "Ctrl+C" ;
+	MESSAGE "Copia la selección en el Portapapeles"
+DEFINE BAR _MED_PASTE OF _medit PROMPT "\<Pegar" ;
+	KEY CTRL+V, "Ctrl+V" ;
+	MESSAGE "Pega el contenido del Portapapeles"
+DEFINE BAR _MED_CLEAR OF _medit PROMPT "\<Borrar" ;
+	MESSAGE "Quita la selección y no la coloca en el Portapapeles"
+DEFINE BAR _MED_SP200 OF _medit PROMPT "\-"
+DEFINE BAR _MED_SLCTA OF _medit PROMPT "Se\<leccionar todo" ;
+	KEY CTRL+A, "Ctrl+A" ;
+	MESSAGE "Selecciona todo el texto o todos los elementos de la ventana actual"
+DEFINE BAR _MED_SP300 OF _medit PROMPT "\-"
+DEFINE BAR _MED_FIND OF _medit PROMPT "\<Buscar..." ;
+	KEY CTRL+F, "Ctrl+F" ;
+	MESSAGE "Busca el texto especificado"
+DEFINE BAR _MED_FINDA OF _medit PROMPT "Buscar siguie\<nte" ;
+	KEY CTRL+G, "Ctrl+G" ;
+	MESSAGE "Repite la última búsqueda"
+DEFINE BAR _MED_REPL OF _medit PROMPT "R\<eemplazar..." ;
+	KEY CTRL+L, "Ctrl+L" ;
+	MESSAGE "Reemplaza el texto especificado con otro texto diferente"
+
+DEFINE POPUP _mwindow MARGIN RELATIVE SHADOW COLOR SCHEME 4
+DEFINE BAR 1 OF _mwindow PROMPT "\<Cascada"
+DEFINE BAR _MWI_ARRAN OF _mwindow PROMPT "\<Organizar todas" ;
+	MESSAGE "Organiza las ventanas como mosaicos que no se solapan"
+DEFINE BAR _MWI_ROTAT OF _mwindow PROMPT "C\<iclo" ;
+	KEY CTRL+F1, "Ctrl+F1"
+DEFINE BAR 4 OF _mwindow PROMPT "Cargar plano"
+ON SELECTION BAR 1 OF _mwindow goapp.cascadeall()
+ON SELECTION BAR 4 OF _mwindow DO cargarplano
+
+DEFINE POPUP _msystem MARGIN RELATIVE SHADOW COLOR SCHEME 4
+DEFINE BAR 1 OF _msystem PROMPT "Ay\<uda" ;
+	KEY F1, "F1"
+DEFINE BAR 2 OF _msystem PROMPT "\-"
+DEFINE BAR 3 OF _msystem PROMPT "\<Acerca de "+goapp.ccaption+"..."
+DEFINE BAR 4 OF _msystem PROMPT "Corregir"
+DEFINE BAR 5 OF _msystem PROMPT "Vistas"
+ON SELECTION BAR 1 OF _msystem goapp.dohelp()
+ON SELECTION BAR 3 OF _msystem goapp.doaboutbox()
+ON SELECTION BAR 4 OF _msystem DO corregir
+ON SELECTION BAR 5 OF _msystem DO vistas
+
+ON SELECTION POPUP _mfile MESSAGEBOX("Característica no disponible.",0,goapp.ccaption)
+ON SELECTION POPUP _mwindow MESSAGEBOX("Característica no disponible.",0,goapp.ccaption)
+ON SELECTION POPUP _msystem MESSAGEBOX("Característica no disponible.",0,goapp.ccaption)
+
+*       *********************************************************
+*       *                                                         
+*       *              Limpiar código y procedimientos            
+*       *                                                         
+*       *********************************************************
+*
+
+IF VERSION(2)=0
+ RELEASE PAD _MSM_PROG OF _MSYSMENU
+ RELEASE POPUPS EXTENDED _MPROG
+ENDIF
+IF  .NOT. goapp.lreleaseunusedmenuitems
+ IF EMPTY(goapp.chelpfile)
+  SET SKIP OF BAR 1 OF _MSYSTEM .T.
+ ENDIF
+ IF EMPTY(goapp.coptionsdialogclass)
+  SET SKIP OF BAR 4 OF _MTOOLS .T.
+ ENDIF
+ IF EMPTY(goapp.caboutboxclass)
+  SET SKIP OF BAR 3 OF _MSYSTEM .T.
+ ENDIF
+ IF EMPTY(goapp.cstartupformclass) .OR.  .NOT. (goapp.lstartupform)
+  SET SKIP OF BAR 12 OF _MFILE .T.
+ ENDIF
+ IF  .NOT. goapp.luserpreferences
+  SET SKIP OF BAR 13 OF _MFILE .T.
+  SET SKIP OF BAR 5 OF _MTOOLS .T.
+ ENDIF
+ELSE
+ IF EMPTY(goapp.coptionsdialogclass)
+  RELEASE BAR 4 OF _MTOOLS
+ ENDIF
+ IF EMPTY(goapp.caboutboxclass)
+  RELEASE BAR 3 OF _MSYSTEM
+ ENDIF
+ IF EMPTY(goapp.chelpfile)
+  RELEASE BAR 1 OF _MSYSTEM
+  RELEASE BAR 2 OF _MSYSTEM
+ ENDIF
+ IF  .NOT. goapp.luserpreferences
+  RELEASE BAR 13 OF _MFILE
+  RELEASE BAR 14 OF _MFILE
+  RELEASE BAR 5 OF _MTOOLS
+ ENDIF
+ IF EMPTY(goapp.cstartupformclass) .OR.  .NOT. (goapp.lstartupform)
+  RELEASE BAR 12 OF _MFILE
+ ENDIF
+ENDIF
+IF ( .NOT. goapp.lreadevents)
+ RELEASE BAR 1 OF _MTOOLS
+ RELEASE POPUPS _mmacros
+ELSE
+ goapp.cmacropopupname = "_mMacros"
+ goapp.setmacros()
+ IF EMPTY(SET("MACKEY"))
+  RELEASE BAR 1 OF _mmacros
+ ENDIF
+ENDIF
+IF ( .NOT. goapp.lfavorites)
+ RELEASE PAD _msm_fave OF _MSYSMENU
+ RELEASE POPUPS EXTENDED _mfave
+ ACTIVATE MENU _MSYSMENU NOWAIT
+ELSE
+ goapp.cfavoritepopupname = "_mFave"
+ goapp.refreshfavoritepopup()
+ENDIF
+*--

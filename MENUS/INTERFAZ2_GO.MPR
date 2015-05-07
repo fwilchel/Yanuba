@@ -1,0 +1,55 @@
+*       *********************************************************
+*       *                                                         
+*       * 04/27/15          INTERFAZ2_GO.MPR            10:29:35  
+*       *                                                         
+*       *********************************************************
+*       *                                                         
+*       * Fredy Wilches                                           
+*       *                                                         
+*       * Copyright (C) 2015 Soft Studio Ltda                     
+*       * ReFox XII  CO125117                                     
+*       * Ciudad,     Código pos                                  
+*       * País                                              
+*       *                                                         
+*       * Descripción:                                            
+*       * Este programa se generó automáticamente por GENMENU.    
+*       *                                                         
+*       *********************************************************
+
+
+*       *********************************************************
+*       *                                                         
+*       *                    Definición de menú                   
+*       *                                                         
+*       *********************************************************
+*
+
+
+DEFINE PAD _msm_go OF _MSYSMENU PROMPT "\<Ir" COLOR SCHEME 3 ;
+	BEFORE _MWINDOW ;
+	KEY ALT+I, "Alt+I" ;
+	MESSAGE "Examina la tabla, el cursor o la vista seleccionados actualmente"
+ON PAD _msm_go OF _MSYSMENU ACTIVATE POPUP _mgo
+
+DEFINE POPUP _mgo MARGIN RELATIVE SHADOW COLOR SCHEME 4
+DEFINE BAR 1 OF _mgo PROMPT "\<Arriba"
+DEFINE BAR 2 OF _mgo PROMPT "A\<bajo"
+DEFINE BAR 3 OF _mgo PROMPT "\<Siguiente"
+DEFINE BAR 4 OF _mgo PROMPT "A\<nterior"
+DEFINE BAR 5 OF _mgo PROMPT "\-"
+DEFINE BAR 6 OF _mgo PROMPT "\<Ir a..."
+DEFINE BAR 7 OF _mgo PROMPT "\<Buscar..."
+DEFINE BAR 8 OF _mgo PROMPT "\<Orden ascendente"
+DEFINE BAR 9 OF _mgo PROMPT "O\<rden descendente"
+DEFINE BAR 10 OF _mgo PROMPT "Establecer \<filtro..."
+ON SELECTION BAR 1 OF _mgo goapp.gotop()
+ON SELECTION BAR 2 OF _mgo goapp.gobottom()
+ON SELECTION BAR 3 OF _mgo goapp.gonext()
+ON SELECTION BAR 4 OF _mgo goapp.goprevious()
+ON SELECTION BAR 6 OF _mgo goapp.showtablegotodialog()
+ON SELECTION BAR 7 OF _mgo goapp.showtablefinddialog()
+ON SELECTION BAR 8 OF _mgo goapp.dosort(,,,.F.)
+ON SELECTION BAR 9 OF _mgo goapp.dosort(,,,.T.)
+ON SELECTION BAR 10 OF _mgo goapp.showtablesetfilterdialog()
+
+ON SELECTION POPUP _mgo MESSAGEBOX("Característica no disponible.",0,goapp.ccaption)
