@@ -1,6 +1,6 @@
  SET DATE TO dmy
  SET CENTURY ON
- SET DEFAULT TO g:\softstudio\yanuba
+ SET DEFAULT TO c:\softstudio\yanuba
  SET PATH TO DATA\, PROGS\
  OPEN DATABASE data\interfaz
  m.desde = DATE()-30

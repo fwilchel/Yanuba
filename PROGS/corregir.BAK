@@ -4,6 +4,10 @@
  m.hasta = DATE()
 
 
+CREATE SQL VIEW VistaCuadreCaja as select Temporal.fecha, Temporal.sucursal, sum(Temporal.debito) as debito,;
+  sum(Temporal.credito) as credito, Temporal.descripcio, Temporal.orden,;
+  Almacenes.nombrealmacen, Almacenes.idfront,;
+  IIF(debito#0,1,2) AS naturaleza from temporal left outer join almacenes on temporal.sucursal = almacenes.idfront where LEN(ALLTRIM(almacenes.codalmacen))=2 group by 1,2,5,6,7,8,9 order by fecha, sucursal, naturaleza, orden, descripcio
 
 ALTER TABLE temporal ADD COLUMN orden i
 ALTER TABLE temporal ADD COLUMN descripci2 c(30)
@@ -12,10 +16,6 @@ ALTER TABLE temporal ADD COLUMN descripci2 c(30)
  RETURN
 
 
-CREATE SQL VIEW VistaCuadreCaja as select Temporal.fecha, Temporal.sucursal, sum(Temporal.debito) as debito,;
-  sum(Temporal.credito) as credito, Temporal.descripcio, Temporal.orden,;
-  Almacenes.nombrealmacen, Almacenes.idfront,;
-  IIF(debito#0,1,2) AS naturaleza from temporal left outer join almacenes on temporal.sucursal = almacenes.idfront where LEN(ALLTRIM(almacenes.codalmacen))=2 group by 1,2,5,6,7,8,9 order by fecha, sucursal, naturaleza, orden, descripcio
 
 
  = DBSETPROP("VistaVendedores.nomvendedor", "Field", "DataType", "c(100)")

@@ -44,7 +44,7 @@
  REPLACE hefd WITH redondear2(hefd) ALL
  REPLACE hefn WITH redondear2(hefn) ALL
  COPY TO extras2.xls TYPE XLS
- SELECT codempleado, nomvendedor, codalmacen, SUM(rn+rnf) as rn, SUM(hed), SUM(hen), SUM(hf), SUM(hefd), SUM(hefn), SUM(retardos), SUM(hed)-redondear2(SUM(retardos)/60) AS sum_hed_retardos FROM extras GROUP BY 1, 2, 3 ORDER BY 3, 2 INTO CURSOR ResumenExtras2
+ SELECT codempleado, nomvendedor, codalmacen, SUM(rn), SUM(rnf), SUM(hed), SUM(hen), SUM(hf), SUM(hefd), SUM(hefn), SUM(retardos), SUM(hed)-redondear2(SUM(retardos)/60) AS sum_hed_retardos FROM extras GROUP BY 1, 2, 3 ORDER BY 3, 2 INTO CURSOR ResumenExtras2
  COPY TO ResumenExtras2.xls TYPE XLS
  CLOSE TABLE ALL
  RETURN
