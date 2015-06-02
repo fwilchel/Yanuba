@@ -158,12 +158,31 @@
     BROWSE NOAPPEND NOEDIT NODELETE NORMAL
  ENDIF
  IF m.movscaja
-    SELECT vpc.fecha, cp.cuenta, a.idfront AS sucursal, IIF(vpc.tipomovcaja=2, importe, 000000000000000.00 ) AS debito, IIF(vpc.tipomovcaja=1, -importe, 000000000000000.00 ) AS credito, nit_varios AS tercero, 1, IIF(vpc.tipomovcaja=1, 2, 1) AS naturaleza, 000000000000000.00  AS base, "30080" AS cc, "INTERFAZ ICG - "+ALLTRIM(cp.descripcion)+" "+ALLTRIM(STR(vpc.z)) AS descripcio, .F. AS vtacredito, 000000 AS numfac FROM vistaPagosCaja AS vpc INNER JOIN ConceptosPago AS cp ON cp.id=vpc.codconceptopago LEFT JOIN vistaSucursales AS vs ON vpc.caja=vs.cajamanager LEFT JOIN almacenes AS a ON SUBSTR(vs.cajamanager, 1, 2)==a.codalmacen WHERE cp.importar UNION ALL SELECT vpc.fecha, m.cuenta_caja AS cuenta, a.idfront AS sucursal, IIF(vpc.tipomovcaja=1, -importe, 000000000000000.00 ) AS debito, IIF(vpc.tipomovcaja=2, importe, 000000000000000.00 ) AS credito, nit_varios AS tercero, 1, IIF(vpc.tipomovcaja=1, 1, 2) AS naturaleza, 000000000000000.00  AS base, "30080" AS cc, "INTERFAZ ICG - "+ALLTRIM(cp.descripcion)+" "+ALLTRIM(STR(vpc.z)) AS descripcio, .F. AS vtacredito, 000000 AS numfac FROM vistaPagosCaja AS vpc INNER JOIN ConceptosPago AS cp ON cp.id=vpc.codconceptopago LEFT JOIN vistaSucursales AS vs ON vpc.caja=vs.cajamanager LEFT JOIN almacenes AS a ON SUBSTR(vs.cajamanager, 1, 2)==a.codalmacen WHERE cp.importar INTO CURSOR MOVSCAJA
+ 
+ 
+    SELECT vpc.fecha, cp.cuenta, a.idfront AS sucursal, IIF(vpc.tipomovcaja=2, importe, 000000000000000.00 ) AS debito, IIF(vpc.tipomovcaja=1, -importe, 000000000000000.00 ) AS credito, nit_varios AS tercero, 1, IIF(vpc.tipomovcaja=1, 2, 1) AS naturaleza, 000000000000000.00  AS base, "30080" AS cc, "INTERFAZ ICG - "+ALLTRIM(cp.descripcion)+" "+ALLTRIM(STR(vpc.z)) AS descripcio, .F. AS vtacredito, 000000 AS numfac ;
+    FROM vistaPagosCaja AS vpc INNER JOIN ConceptosPago AS cp ON cp.id=vpc.codconceptopago ;
+    LEFT JOIN vistaSucursales AS vs ON vpc.caja=vs.cajamanager ;
+    LEFT JOIN almacenes AS a ON SUBSTR(vs.cajamanager, 1, 2)==a.codalmacen ;
+    WHERE cp.importar ;
+    UNION ALL ;
+    SELECT vpc.fecha, m.cuenta_caja AS cuenta, a.idfront AS sucursal, IIF(vpc.tipomovcaja=1, -importe, 000000000000000.00 ) AS debito, IIF(vpc.tipomovcaja=2, importe, 000000000000000.00 ) AS credito, nit_varios AS tercero, 1, IIF(vpc.tipomovcaja=1, 1, 2) AS naturaleza, 000000000000000.00  AS base, "30080" AS cc, "INTERFAZ ICG - "+ALLTRIM(cp.descripcion)+" "+ALLTRIM(STR(vpc.z)) AS descripcio, .F. AS vtacredito, 000000 AS numfac ;
+    FROM vistaPagosCaja AS vpc INNER JOIN ConceptosPago AS cp ON cp.id=vpc.codconceptopago ;
+    LEFT JOIN vistaSucursales AS vs ON vpc.caja=vs.cajamanager ;
+    LEFT JOIN almacenes AS a ON SUBSTR(vs.cajamanager, 1, 2)==a.codalmacen ;
+    WHERE cp.importar INTO CURSOR MOVSCAJA
     COPY TO movscaja.xls TYPE XLS
     BROWSE NOAPPEND NOEDIT NODELETE NORMAL
  ENDIF
  IF m.anticipos
-    SELECT vpc.fechadocumento AS fecha, m.cuenta_anticipos AS cuenta, a.idfront AS sucursal, 000000000000000.00  AS debito, importe AS credito, nit_varios AS tercero, 1, 2 AS naturaleza, 000000000000000.00  AS base, "30080" AS cc, "INTERFAZ ICG - ANTICIPOS "+ALLTRIM(STR(vpc.zsaldado)) AS descripcio, .F. AS vtacredito, 000000 AS numfac FROM vistaAnticiposReservadas AS vpc LEFT JOIN vistaSucursales AS vs ON vpc.cajasaldado=vs.cajamanager LEFT JOIN almacenes AS a ON SUBSTR(vs.cajamanager, 1, 2)==a.codalmacen UNION ALL SELECT vpc.fechadocumento AS fecha, m.cuenta_caja AS cuenta, a.idfront AS sucursal, importe AS debito, 000000000000000.00  AS credito, nit_varios AS tercero, 1, 1 AS naturaleza, 000000000000000.00  AS base, "30080" AS cc, "INTERFAZ ICG - ANTICIPOS "+ALLTRIM(STR(vpc.zsaldado)) AS descripcio, .F. AS vtacredito, 000000 AS numfac FROM vistaAnticiposReservadas AS vpc LEFT JOIN vistaSucursales AS vs ON vpc.cajasaldado=vs.cajamanager LEFT JOIN almacenes AS a ON SUBSTR(vs.cajamanager, 1, 2)==a.codalmacen INTO CURSOR ANTICIPOS
+ 
+    SELECT vpc.fechadocumento AS fecha, m.cuenta_anticipos AS cuenta, a.idfront AS sucursal, 000000000000000.00  AS debito, importe AS credito, nit_varios AS tercero, 1, 2 AS naturaleza, 000000000000000.00  AS base, "30080" AS cc, "INTERFAZ ICG - ANTICIPOS "+ALLTRIM(STR(vpc.zsaldado)) AS descripcio, .F. AS vtacredito, 000000 AS numfac ;
+    FROM vistaAnticiposReservadas AS vpc LEFT JOIN vistaSucursales AS vs ON vpc.cajasaldado=vs.cajamanager ;
+    LEFT JOIN almacenes AS a ON SUBSTR(vs.cajamanager, 1, 2)==a.codalmacen ;
+    UNION ALL ;
+    SELECT vpc.fechadocumento AS fecha, m.cuenta_caja AS cuenta, a.idfront AS sucursal, importe AS debito, 000000000000000.00  AS credito, nit_varios AS tercero, 1, 1 AS naturaleza, 000000000000000.00  AS base, "30080" AS cc, "INTERFAZ ICG - ANTICIPOS "+ALLTRIM(STR(vpc.zsaldado)) AS descripcio, .F. AS vtacredito, 000000 AS numfac ;
+    FROM vistaAnticiposReservadas AS vpc LEFT JOIN vistaSucursales AS vs ON vpc.cajasaldado=vs.cajamanager ;
+    LEFT JOIN almacenes AS a ON SUBSTR(vs.cajamanager, 1, 2)==a.codalmacen INTO CURSOR ANTICIPOS
     COPY TO anticipos.xls TYPE XLS
     BROWSE NOAPPEND NOEDIT NODELETE NORMAL
  ENDIF
@@ -185,13 +204,26 @@
        
        
        IF m.cuadreCaja
+       
        SELECT * from almacenes WHERE LEN(ALLTRIM(codalmacen))=2 INTO CURSOR alma2
        
        SELECT ventas.fecha, ventas.sucursal, ROUND(SUM(debito), 0) AS debito, ROUND(SUM(credito), 0) AS credito, IIF(orden=3,"INTERFAZ ICG - "+descripci2, descripcio) as descripcio, orden, Almacenes.nombrealmacen, IIF(debito<>0,2,1) AS natu ;
-       	FROM ventas inner join alma2 as almacenes on ventas.sucursal = almacenes.idfront;
-       	WHERE (debito<>0 OR credito<>0) AND orden NOT in (9,10, 11, 12) GROUP BY 1,2,5,6,7,8 ;
-       	order by fecha, sucursal, natu, orden, descripcio INTO CURSOR cuadreCaja
-       	
+	       	FROM ventas inner join alma2 as almacenes on ventas.sucursal = almacenes.idfront;
+	       	WHERE (debito<>0 OR credito<>0) AND orden NOT in (9,10, 11, 12) GROUP BY 1,2,5,6,7,8 ;
+       UNION ALL ;
+	    SELECT vpc.fecha, a.idfront AS sucursal, sum(IIF(vpc.tipomovcaja=2, importe, 000000000000000.00)) AS debito, sum(IIF(vpc.tipomovcaja=1, -importe, 000000000000000.00)) AS credito, "INTERFAZ ICG - "+ALLTRIM(cp.descripcion) AS descripcio, 15, a.nombrealmacen, 3 AS natu ;
+		    FROM vistaPagosCaja AS vpc INNER JOIN ConceptosPago AS cp ON cp.id=vpc.codconceptopago ;
+		    LEFT JOIN alma2 as a ON SUBSTR(vpc.caja, 1, 2)==a.codalmacen ;
+		    WHERE cp.importar GROUP BY 1,2,5,6,7,8 ;
+		UNION ALL ;
+			SELECT vpc.fechadocumento AS fecha, a.idfront AS sucursal, 000000000000000.00 AS debito, sum(importe) AS credito, "INTERFAZ ICG - ANTICIPOS " AS descripcio, 16, a.nombrealmacen, 3 AS natu ;
+		    FROM vistaAnticiposReservadas AS vpc LEFT JOIN vistaSucursales AS vs ON vpc.cajasaldado=vs.cajamanager ;
+		    LEFT JOIN alma2 AS a ON SUBSTR(vs.cajamanager, 1, 2)==a.codalmacen GROUP BY 1,2,5,6,7,8;
+		ORDER BY 1,2,8,6,5 ;
+       	INTO CURSOR cuadreCaja
+
+&&	       	order by fecha, sucursal, natu, orden, descripcio 
+
        	REPORT FORM reports/CuadreCaja preview
        	
        	USE
