@@ -132,7 +132,23 @@
     BROWSE NOAPPEND NOEDIT NODELETE NORMAL
  ENDIF
  IF m.traslados
-    SELECT fecha, IIF(a2.idfront=0, a1.idfront, a2.idfront) AS sucursale, IIF(a1.idfront=0, a2.idfront, a1.idfront) AS sucursal, unidades*precio AS debito, 000000000000000.00  AS credito, m.nit AS tercero, 1 AS naturaleza, codalmacenorigen, codalmacendestino, codmarca, a1.nombrealmacen FROM vistaTraslados LEFT JOIN vistaArticulos ON vistatraslados.codarticulo=vistaarticulos.codarticulo LEFT JOIN marcas ON vistaarticulos.marca=marcas.codmarca LEFT JOIN almacenes AS a1 ON vistatraslados.codalmacendestino=a1.codalmacen LEFT JOIN almacenes AS a2 ON vistatraslados.codalmacenorigen=a2.codalmacen UNION ALL SELECT fecha, IIF(a1.idfront=0, a2.idfront, a1.idfront) AS sucursale, IIF(a1.idfront=0, a2.idfront, a1.idfront) AS sucursal, 000000000000000.00  AS debito, unidades*precio AS credito, m.nit AS tercero, 2 AS naturaleza, codalmacenorigen, codalmacendestino, codmarca, a2.nombrealmacen FROM vistaTraslados LEFT JOIN vistaArticulos ON vistatraslados.codarticulo=vistaarticulos.codarticulo LEFT JOIN marcas ON vistaarticulos.marca=marcas.codmarca LEFT JOIN almacenes AS a1 ON vistatraslados.codalmacenorigen=a1.codalmacen LEFT JOIN almacenes AS a2 ON vistatraslados.codalmacendestino=a2.codalmacen UNION ALL SELECT fecha, IIF(vv.codalmacen="A1", 029, 030) AS sucursale, almacenes.idfront AS sucursal, unidadestotal*precio AS debito, 000000000000000.00  AS credito, m.nit AS tercero, 1 AS naturaleza, vv.codalmacen AS codalmacenorigen, almacenes.codalmacen AS codalmacendestino, marca AS codmarca, almacenes.nombrealmacen FROM VistaVentas AS vv LEFT JOIN almacenes ON vv.codcliente=almacenes.codcliente LEFT JOIN vistaArticulos ON vv.codarticulo=vistaarticulos.codarticulo WHERE unidadestotal*precio<>0 AND unidadespagadas=0 UNION ALL SELECT fecha, IIF(vv.codalmacen="A1", 029, 030) AS sucursale, IIF(vv.codalmacen="A1", 029, 030) AS sucursal, 000000000000000.00  AS debito, unidadestotal*precio AS credito, m.nit AS tercero, 2 AS naturaleza, vv.codalmacen AS codalmacenorigen, almacenes.codalmacen AS codalmacendestino, marca AS codmarca, almacenes.nombrealmacen FROM VistaVentas AS vv LEFT JOIN almacenes ON vv.codcliente=almacenes.codcliente LEFT JOIN vistaArticulos ON vv.codarticulo=vistaarticulos.codarticulo WHERE unidadestotal*precio<>0 AND unidadespagadas=0 INTO CURSOR trasladosA
+    SELECT fecha, IIF(a2.idfront=0, a1.idfront, a2.idfront) AS sucursale, IIF(a1.idfront=0, a2.idfront, a1.idfront) AS sucursal, unidades*precio AS debito, 000000000000000.00  AS credito, m.nit AS tercero, 1 AS naturaleza, codalmacenorigen, codalmacendestino, codmarca, a1.nombrealmacen ;
+    FROM vistaTraslados LEFT JOIN vistaArticulos ON vistatraslados.codarticulo=vistaarticulos.codarticulo ;
+    LEFT JOIN marcas ON vistaarticulos.marca=marcas.codmarca ;
+    LEFT JOIN almacenes AS a1 ON vistatraslados.codalmacendestino=a1.codalmacen ;
+    LEFT JOIN almacenes AS a2 ON vistatraslados.codalmacenorigen=a2.codalmacen ;
+    UNION ALL SELECT fecha, IIF(a1.idfront=0, a2.idfront, a1.idfront) AS sucursale, IIF(a1.idfront=0, a2.idfront, a1.idfront) AS sucursal, 000000000000000.00  AS debito, unidades*precio AS credito, m.nit AS tercero, 2 AS naturaleza, codalmacenorigen, codalmacendestino, codmarca, a2.nombrealmacen ;
+    FROM vistaTraslados LEFT JOIN vistaArticulos ON vistatraslados.codarticulo=vistaarticulos.codarticulo ;
+    LEFT JOIN marcas ON vistaarticulos.marca=marcas.codmarca LEFT JOIN almacenes AS a1 ON vistatraslados.codalmacenorigen=a1.codalmacen ;
+    LEFT JOIN almacenes AS a2 ON vistatraslados.codalmacendestino=a2.codalmacen ;
+    UNION ALL SELECT fecha, IIF(vv.codalmacen="A1", 029, 030) AS sucursale, almacenes.idfront AS sucursal, unidadestotal*precio AS debito, 000000000000000.00  AS credito, m.nit AS tercero, 1 AS naturaleza, vv.codalmacen AS codalmacenorigen, almacenes.codalmacen AS codalmacendestino, marca AS codmarca, almacenes.nombrealmacen ;
+    FROM VistaVentas AS vv LEFT JOIN almacenes ON vv.codcliente=almacenes.codcliente ;
+    LEFT JOIN vistaArticulos ON vv.codarticulo=vistaarticulos.codarticulo ;
+    WHERE unidadestotal*precio<>0 AND unidadespagadas=0 ;
+    UNION ALL SELECT fecha, IIF(vv.codalmacen="A1", 029, 030) AS sucursale, IIF(vv.codalmacen="A1", 029, 030) AS sucursal, 000000000000000.00  AS debito, unidadestotal*precio AS credito, m.nit AS tercero, 2 AS naturaleza, vv.codalmacen AS codalmacenorigen, almacenes.codalmacen AS codalmacendestino, marca AS codmarca, almacenes.nombrealmacen ;
+    FROM VistaVentas AS vv LEFT JOIN almacenes ON vv.codcliente=almacenes.codcliente ;
+    LEFT JOIN vistaArticulos ON vv.codarticulo=vistaarticulos.codarticulo ;
+    WHERE unidadestotal*precio<>0 AND unidadespagadas=0 INTO CURSOR trasladosA
     BROWSE NOAPPEND NOEDIT NODELETE NORMAL
  ENDIF
  IF m.inventarios
@@ -207,18 +223,24 @@
        
        SELECT * from almacenes WHERE LEN(ALLTRIM(codalmacen))=2 INTO CURSOR alma2
        
-       SELECT ventas.fecha, ventas.sucursal, ROUND(SUM(debito), 0) AS debito, ROUND(SUM(credito), 0) AS credito, IIF(orden=3,"INTERFAZ ICG - "+descripci2, descripcio) as descripcio, orden, Almacenes.nombrealmacen, IIF(debito<>0,2,1) AS natu ;
-	       	FROM ventas inner join alma2 as almacenes on ventas.sucursal = almacenes.idfront;
+       SELECT ventas.fecha, ventas.sucursal, ROUND(SUM(debito), 0) AS debito, ROUND(SUM(credito), 0) AS credito, IIF(orden=3,"INTERFAZ ICG - "+descripci2, descripcio) as descripcio, orden, Alma2.nombrealmacen, IIF(orden=5 OR orden=6,4,IIF(debito<>0,2,1)) AS natu ;
+	       	FROM ventas inner join alma2 on ventas.sucursal = alma2.idfront;
 	       	WHERE (debito<>0 OR credito<>0) AND orden NOT in (9,10, 11, 12) GROUP BY 1,2,5,6,7,8 ;
        UNION ALL ;
 	    SELECT vpc.fecha, a.idfront AS sucursal, sum(IIF(vpc.tipomovcaja=2, importe, 000000000000000.00)) AS debito, sum(IIF(vpc.tipomovcaja=1, -importe, 000000000000000.00)) AS credito, "INTERFAZ ICG - "+ALLTRIM(cp.descripcion) AS descripcio, 15, a.nombrealmacen, 3 AS natu ;
 		    FROM vistaPagosCaja AS vpc INNER JOIN ConceptosPago AS cp ON cp.id=vpc.codconceptopago ;
 		    LEFT JOIN alma2 as a ON SUBSTR(vpc.caja, 1, 2)==a.codalmacen ;
-		    WHERE cp.importar GROUP BY 1,2,5,6,7,8 ;
+		     GROUP BY 1,2,5,6,7,8 ;   &&&& WHERE cp.importar OR cp.id=5
 		UNION ALL ;
 			SELECT vpc.fechadocumento AS fecha, a.idfront AS sucursal, 000000000000000.00 AS debito, sum(importe) AS credito, "INTERFAZ ICG - ANTICIPOS " AS descripcio, 16, a.nombrealmacen, 3 AS natu ;
 		    FROM vistaAnticiposReservadas AS vpc LEFT JOIN vistaSucursales AS vs ON vpc.cajasaldado=vs.cajamanager ;
-		    LEFT JOIN alma2 AS a ON SUBSTR(vs.cajamanager, 1, 2)==a.codalmacen GROUP BY 1,2,5,6,7,8;
+		    LEFT JOIN alma2 AS a ON SUBSTR(vs.cajamanager, 1, 2)==a.codalmacen GROUP BY 1,2,5,6,7,8 ;
+		UNION ALL ;
+			select fecha, alma2.idfront as sucursal, sum(importe) as debito, 000000000000000.00 as credito, "INTERFAZ ICG - PLANILLA"+SPACE(16) as descripcio, 17 as orden, alma2.nombrealmacen, 3 as natu ;
+				FROM vistaPlanilla LEFT JOIN alma2 ON SUBSTR(vistaPlanilla.caja,1,2)=alma2.codalmacen GROUP BY 1,2,5,6,7,8 ;
+		UNION ALL ;
+			select fechaSaldado as fecha, alma2.idfront as sucursal, 000000000000000.00 as debito, sum(importe) as credito, "INTERFAZ ICG - COBRO"+SPACE(19) as descripcio, 18 as orden, alma2.nombrealmacen, 4 as natu ;
+				FROM vistaCobros LEFT JOIN alma2 ON SUBSTR(vistaCobros.serie,1,2)=alma2.codalmacen GROUP BY 1,2,5,6,7,8 ;
 		ORDER BY 1,2,8,6,5 ;
        	INTO CURSOR cuadreCaja
 

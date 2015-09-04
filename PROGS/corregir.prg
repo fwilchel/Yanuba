@@ -3,14 +3,26 @@
  m.desde = DATE()
  m.hasta = DATE()
 
+CREATE SQL VIEW VistaPlanilla REMOTE CONNECTION ConexionICG as select * from pagos where fecha>=?m.desde and fecha<=?m.hasta AND (codconceptopago=2 OR codconceptopago=3)
+CREATE SQL VIEW vistaCobros REMOTE CONNECTION ConexionICG as select * from Tesoreria where fechaSaldado>=?m.desde AND fechaSaldado<=?m.hasta AND comentario<>'' AND origen='C' AND tipodocumento='F'
+CREATE SQL VIEW VistaCuadreCaja as select Temporal.fecha, Temporal.sucursal, sum(Temporal.debito) as debito,;
+  sum(Temporal.credito) as credito, Temporal.descripcio, Temporal.orden,;
+  Almacenes.nombrealmacen, Almacenes.idfront,;
+  IIF(debito#0,1,2) AS naturaleza from temporal left outer join almacenes on temporal.sucursal = almacenes.idfront where LEN(ALLTRIM(almacenes.codalmacen))=2 group by 1,2,5,6,7,8,9 order by fecha, sucursal, naturaleza, orden, descripcio
+ CREATE SQL VIEW VistaPagosCaja REMOTE CONNECTION conexionICG AS select caja, numero, fecha, importe, comentario, codmediopago, codconceptopago, tipomovcaja, z from pagos where fecha>=?m.desde AND fecha<=?m.hasta
 
+
+
+ CLOSE TABLE ALL
+ RETURN
+CREATE SQL VIEW vistaCobros REMOTE CONNECTION ConexionICG as select * from Tesoreria where fechaSaldado>=?m.desde AND fechaSaldado<=?m.hasta AND comentario<>'' AND origen='C' AND tipodocumento='F'
+CREATE SQL VIEW VistaPlanilla REMOTE CONNECTION ConexionICG as select * from pagos where fecha>=?m.desde and fecha<=?m.hasta AND codconceptopago=2
 
 ALTER TABLE temporal ADD COLUMN orden i
 ALTER TABLE temporal ADD COLUMN descripci2 c(30)
 
- CLOSE TABLE ALL
- RETURN
-
+CREATE SQL VIEW vistaCobros REMOTE CONNECTION ConexionICG as select * from Tesoreria where fechaSaldado>=?m.desde AND fechaSaldado<=?m.hasta AND comentario<>'' AND origen='C' AND tipodocumento='F'
+CREATE SQL VIEW VistaPlanilla REMOTE CONNECTION ConexionICG as select * from pagos where fecha>=?m.desde and fecha<=?m.hasta AND codconceptopago=2
 
 CREATE SQL VIEW VistaCuadreCaja as select Temporal.fecha, Temporal.sucursal, sum(Temporal.debito) as debito,;
   sum(Temporal.credito) as credito, Temporal.descripcio, Temporal.orden,;
