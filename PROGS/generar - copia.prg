@@ -45,7 +45,7 @@
     	LEFT JOIN vistaSucursales ON vistaventas.caja=vistasucursales.cajamanager ;
     	LEFT JOIN almacenes ON SUBSTR(vistasucursales.cajamanager, 1, 2)==almacenes.codalmacen ;
     	LEFT JOIN pagoUnico AS pu ON vistaventas.fecha=pu.fecha AND vistaventas.numserie=pu.serie AND vistaventas.numalbaran=pu.numero;
-    	WHERE tipoimpuesto<>3 AND precio*unidadespagadas<>0 AND vistaventas.codarticulo>0 AND vistaventas.codarticulo<>3240; && AND SUBSTR(vistaventas.numserie, 4, 1)<>'I'
+    	WHERE tipoimpuesto<>3 AND SUBSTR(vistaventas.numserie, 4, 1)<>'I' AND precio*unidadespagadas<>0 AND vistaventas.codarticulo>0 AND vistaventas.codarticulo<>3240;
 	UNION ALL SELECT vistaventas.fecha, m.cta_puntos_dto, almacenes.idfront AS sucursal, -precio*unidadespagadas+dto*precio*unidadespagadas/100 AS debito, 000000000000000.00 AS credito, nit_varios AS tercero, 12, 1 AS naturaleza, 000000000000000.00  AS base, '30080   ' as cc, "INTERFAZ ICG - DESCUENTO PUNTOS        " AS descripcio, .F. AS vtacredito, 000000 AS numfac, IIF(pu.codformapago='19', 010, almacenes.idfront) AS sucursale, pu.codformapago, cuantos, 01 as orden, SPACE(30) as descripci2, vistaVentas.numserie, vistaventas.numalbaran ;
     	FROM vistaVentas LEFT JOIN vistaArticulos ON vistaventas.codarticulo=vistaarticulos.codarticulo ;
     	LEFT JOIN marcas ON vistaarticulos.marca=marcas.codmarca ;
@@ -58,32 +58,32 @@
     	LEFT JOIN impuestos ON vistaventas.tipoimpuesto=impuestos.tipoiva ;
     	LEFT JOIN almacenes ON SUBSTR(vistasucursales.cajamanager, 1, 2)==almacenes.codalmacen ;
     	LEFT JOIN pagoUnico AS pu ON vistaventas.fecha=pu.fecha AND vistaventas.numserie=pu.serie AND vistaventas.numalbaran=pu.numero ;
-    	WHERE tipoimpuesto<>3 AND LEN(ALLTRIM(caja))>0 ; && AND SUBSTR(vistaventas.numserie, 4, 1)<>'I'
+    	WHERE tipoimpuesto<>3 AND SUBSTR(vistaventas.numserie, 4, 1)<>'I' AND LEN(ALLTRIM(caja))>0 ;
     UNION ALL SELECT vistapagos.fecha, formaspago.cuenta, almacenes.idfront AS sucursal, importe AS debito, 000000000000000.00  AS credito, IIF(LEN(ALLTRIM(formaspago.nit))>0, formaspago.nit, IIF(formaspago.credito, ALLTRIM(IIF(ISNULL(cif), "", cif)), nit_varios)) AS tercero, 3, 1 AS naturaleza, 000000000000000.00  AS base, formaspago.cc AS cc, "INTERFAZ ICG - PAGOS                   " AS descripcio, formaspago.credito AS vtacredito, IIF(formaspago.credito, IIF(formaspago.numerofiscal, vistapagos.numerofiscal, getconsecutivo2(vistapagos.fecha)), 000000) AS numfac, IIF((pu.codformapago='19' AND cuantos=1) OR (pu.codformapago='19' AND cuantos>1 AND importe>0), 010, almacenes.idfront) AS sucursale, pu.codformapago, cuantos, 03 as orden, formasPago.descripcion as descripci2, vistaPagos.serie, vistaPagos.numero ;
     	FROM vistaPagos LEFT JOIN formasPago ON vistapagos.codformapago=formaspago.codformapago ;
     	LEFT JOIN vistaSucursales ON vistapagos.caja=vistasucursales.cajamanager ;
     	LEFT JOIN almacenes ON SUBSTR(vistasucursales.cajamanager, 1, 2)==almacenes.codalmacen ;
     	LEFT JOIN pagoUnico AS pu ON vistapagos.fecha=pu.fecha AND vistapagos.serie=pu.serie AND vistapagos.numero=pu.numero ;
-    	WHERE LEN(ALLTRIM(caja))>0 AND vistapagos.codtipopago IS NOT NULL  ; &&SUBSTR(vistapagos.serie, 4, 1)<>'I' AND 
+    	WHERE SUBSTR(vistapagos.serie, 4, 1)<>'I' AND LEN(ALLTRIM(caja))>0 AND vistapagos.codtipopago IS NOT NULL  ;
     UNION ALL SELECT vistaventas.fecha, m.cuenta_exentas AS cuenta, almacenes.idfront AS sucursal, 000000000000000.00  AS debito, precio*unidadespagadas AS credito, nit_varios AS tercero, 4, 2 AS naturaleza, 000000000000000.00  AS base, marcas.cc, "INTERFAZ ICG - EXENTOS                 " AS descripcio, .F. AS vtacredito, 000000 AS numfac, IIF(pu.codformapago='19', 010, almacenes.idfront) AS sucursale, pu.codformapago, cuantos, 04 as orden, "" as descripci2, vistaVentas.numserie, vistaventas.numalbaran ;
     	FROM vistaVentas LEFT JOIN vistaArticulos ON vistaventas.codarticulo=vistaarticulos.codarticulo ;
     	LEFT JOIN marcas ON vistaarticulos.marca=marcas.codmarca ;
     	LEFT JOIN vistaSucursales ON vistaventas.caja=vistasucursales.cajamanager ;
     	LEFT JOIN almacenes ON SUBSTR(vistasucursales.cajamanager, 1, 2)==almacenes.codalmacen ;
     	LEFT JOIN pagoUnico AS pu ON vistaventas.fecha=pu.fecha AND vistaventas.numserie=pu.serie AND vistaventas.numalbaran=pu.numero ;
-    	WHERE tipoimpuesto=3  AND precio*unidadespagadas<>0 AND vistaventas.codarticulo<>3240 ; && AND SUBSTR(vistaventas.numserie, 4, 1)<>'I'
+    	WHERE tipoimpuesto=3 AND SUBSTR(vistaventas.numserie, 4, 1)<>'I' AND precio*unidadespagadas<>0 AND vistaventas.codarticulo<>3240 ;
     UNION ALL SELECT vistaventas.fecha, m.cuenta_descuentos AS cuenta, almacenes.idfront AS sucursal, dto*precio*unidadespagadas/100 AS debito, 000000000000000.00  AS credito, nit_varios AS tercero, 5, 1 AS naturaleza, 000000000000000.00  AS base, marcas.cc, "INTERFAZ ICG - DESCUENTOS              " AS descripcio, .F. AS vtacredito, 000000 AS numfac, IIF(pu.codformapago='19', 010, almacenes.idfront) AS sucursale, pu.codformapago, cuantos, 05 as orden, "" as descripci2, vistaVentas.numserie, vistaventas.numalbaran ;
     	FROM vistaVentas LEFT JOIN vistaArticulos ON vistaventas.codarticulo=vistaarticulos.codarticulo ;
     	LEFT JOIN marcas ON vistaarticulos.marca=marcas.codmarca ;
     	LEFT JOIN vistaSucursales ON vistaventas.caja=vistasucursales.cajamanager ;
     	LEFT JOIN almacenes ON SUBSTR(vistasucursales.cajamanager, 1, 2)==almacenes.codalmacen ;
     	LEFT JOIN pagoUnico AS pu ON vistaventas.fecha=pu.fecha AND vistaventas.numserie=pu.serie AND vistaventas.numalbaran=pu.numero ;
-    	WHERE dto<>0 ; &&AND SUBSTR(vistaventas.numserie, 4, 1)<>'I' 
+    	WHERE dto<>0 AND SUBSTR(vistaventas.numserie, 4, 1)<>'I' ;
     UNION ALL SELECT descuentoscomerciales.fecha, m.cuenta_descuentos AS cuenta, almacenes.idfront AS sucursal, SUM(totdtocomercial) AS debito, 000000000000000.00  AS credito, nit_varios AS tercero, 6, 1 AS naturaleza, 000000000000000.00  AS base, "30080   " AS cc, "INTERFAZ ICG - DESCUENTOS              " AS descripcio, .F. AS vtacredito, 000000 AS numfac, IIF(pu.codformapago='19', 010, almacenes.idfront) AS sucursale, pu.codformapago, cuantos, 06 as orden, "" as descripci2, descuentosComerciales.numserie, descuentosComerciales.numalbaran ;
     	FROM descuentosComerciales LEFT JOIN vistaSucursales ON descuentoscomerciales.caja=vistasucursales.cajamanager ;
     	LEFT JOIN almacenes ON SUBSTR(vistasucursales.cajamanager, 1, 2)==almacenes.codalmacen ;
     	LEFT JOIN pagoUnico AS pu ON descuentoscomerciales.fecha=pu.fecha AND descuentoscomerciales.numserie=pu.serie AND descuentoscomerciales.numalbaran=pu.numero ;
-    	WHERE  totdtocomercial<>0 GROUP BY descuentoscomerciales.fecha, almacenes.idfront, sucursale, pu.codformapago ; &&SUBSTR(descuentoscomerciales.numserie, 4, 1)<>'I' AND
+    	WHERE SUBSTR(descuentoscomerciales.numserie, 4, 1)<>'I' AND totdtocomercial<>0 GROUP BY descuentoscomerciales.fecha, almacenes.idfront, sucursale, pu.codformapago ;
    	INTO CURSOR ventas1
 
 	SELECT vistaventas.fecha, m.cta_puntos_cr, almacenes.idfront AS sucursal, -precio*unidadespagadas+dto*precio*unidadespagadas/100 AS debito, 000000000000000.00 AS credito, nit_varios AS tercero, 13, 1 AS naturaleza, 000000000000000.00  AS base, SPACE(8) as cc, "INTERFAZ ICG - REDENCION PUNTOS        " AS descripcio, .F. AS vtacredito, 000000 AS numfac, IIF(pu.codformapago='19', 010, almacenes.idfront) AS sucursale, pu.codformapago, cuantos, 01 as orden, SPACE(30) as descripci2, vistaVentas.numserie, vistaventas.numalbaran ;
@@ -140,14 +140,14 @@
     	LEFT JOIN vistaSucursales ON vistaventas.caja=vistasucursales.cajamanager ;
     	LEFT JOIN almacenes ON SUBSTR(vistasucursales.cajamanager, 1, 2)==almacenes.codalmacen ;
     	LEFT JOIN pagoUnico AS pu ON vistaventas.fecha=pu.fecha AND vistaventas.numserie=pu.serie AND vistaventas.numalbaran=pu.numero;
-    	WHERE  puntosacum<>0 AND numlin=1 ; &&SUBSTR(vistaventas.numserie, 4, 1)<>'I' AND
+    	WHERE SUBSTR(vistaventas.numserie, 4, 1)<>'I' AND puntosacum<>0 AND numlin=1 ;
     UNION ALL SELECT vistaventas.fecha, m.cta_puntos_cr, almacenes.idfront AS sucursal, 000000000000000.00 AS debito, puntosacum AS credito, nit_varios AS tercero, 14, 2 AS naturaleza, 000000000000000.00  AS base, SPACE(8) as cc, "INTERFAZ ICG - PUNTOS ACUMULADOS       " AS descripcio, .F. AS vtacredito, 000000 AS numfac, IIF(pu.codformapago='19', 010, almacenes.idfront) AS sucursale, pu.codformapago, cuantos, 01 as orden, SPACE(30) as descripci2, vistaVentas.numserie, vistaventas.numalbaran ;
     	FROM vistaVentas LEFT JOIN vistaArticulos ON vistaventas.codarticulo=vistaarticulos.codarticulo ;
     	LEFT JOIN marcas ON vistaarticulos.marca=marcas.codmarca ;
     	LEFT JOIN vistaSucursales ON vistaventas.caja=vistasucursales.cajamanager ;
     	LEFT JOIN almacenes ON SUBSTR(vistasucursales.cajamanager, 1, 2)==almacenes.codalmacen ;
     	LEFT JOIN pagoUnico AS pu ON vistaventas.fecha=pu.fecha AND vistaventas.numserie=pu.serie AND vistaventas.numalbaran=pu.numero;
-    	WHERE  puntosacum<>0 AND numlin=1 ; &&SUBSTR(vistaventas.numserie, 4, 1)<>'I' AND
+    	WHERE SUBSTR(vistaventas.numserie, 4, 1)<>'I' AND puntosacum<>0 AND numlin=1 ;
     INTO CURSOR ventas
 
     COPY TO ventas.xls TYPE XLS
@@ -250,9 +250,9 @@
        SCAN
           REPLACE consecutiv WITH getconsecutivo("consecutivo")
        ENDSCAN
-       SELECT "RV" AS tipodocumento, consecutiv AS numerodoc, ventas.fecha, ventas.cuenta, ventas.sucursal, ROUND(SUM(IIF(debito>=0, debito, 0)+IIF(credito<0, -credito,0)), 0) AS debito, ROUND(SUM(IIF(credito>=0, credito,0)+IIF(debito<0,-debito,0)), 0) AS credito, ROUND(SUM(base), 0) AS base, tercero, cc, descripcio, vtacredito, numfac, ventas.sucursale, orden ;
+       SELECT "RV" AS tipodocumento, consecutiv AS numerodoc, ventas.fecha, ventas.cuenta, ventas.sucursal, ROUND(SUM(debito), 0) AS debito, ROUND(SUM(credito), 0) AS credito, ROUND(SUM(base), 0) AS base, tercero, cc, descripcio, vtacredito, numfac, ventas.sucursale, orden ;
        	FROM ventas LEFT JOIN consecutivos ON ventas.fecha=consecutivos.fecha AND ventas.sucursal=consecutivos.sucursal ;
-       	WHERE debito<>0 OR credito<>0 GROUP BY ventas.fecha, tipodocumento, cuenta, descripcio, tercero, ventas.sucursal, IIF(debito>=0 AND credito>=0,naturaleza,3-naturaleza), cc, numfac, ventas.sucursale, orden ;
+       	WHERE debito<>0 OR credito<>0 GROUP BY ventas.fecha, tipodocumento, cuenta, descripcio, tercero, ventas.sucursal, naturaleza, cc, numfac, ventas.sucursale, orden ;
        	ORDER BY ventas.fecha, tipodocumento, numerodoc INTO CURSOR c1
        copiar3("c1")
        SELECT consecutivos

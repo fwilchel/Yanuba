@@ -1,10 +1,10 @@
  SELECT horas
  DELETE ALL FOR desde=m.desde .AND. hasta=m.hasta
- PACK
+ &&PACK
  SELECT 0
  USE vendedores
- SELECT 0
- USE vistaVendedores
+&& SELECT 0
+&& USE vistaVendedores
  SELECT 0
  USE vistaHoras
  SCAN FOR horas<>0
@@ -98,5 +98,12 @@
  ENDSCAN
  SELECT horas
  REPLACE rol WITH IIF(codalmacen='A1', 29, 22) FOR rol=0 .AND. cedula<2000 .AND. desde=m.desde .AND. hasta=m.hasta
- 
+SELECT vendedores
+USE
+&&SELECT vistavendedores
+&&USE
+SELECT vistahoras
+use 
 **
+
+SELECT horas

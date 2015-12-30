@@ -3,6 +3,28 @@
  m.desde = DATE()
  m.hasta = DATE()
 
+
+ CREATE SQL VIEW VistaVentas REMOTE CONNECTION ConexionICG AS SELECT Albventacab.NUMSERIE, Albventacab.NUMALBARAN, Albventacab.N, Albventacab.FECHA, precio, unidadespagadas, dto, total, iva, precioIva, tipoimpuesto, albVentaLin.codArticulo, caja, Albventacab.TOTALBRUTO, Albventacab.TOTALIMPUESTOS, albventalin.coste,  Albventacab.TOTALNETO, coste as precioDefecto, Albventacab.totDtoComercial, Albventacab.dtoComercial, ultimoCoste, unidadesTotal, fvsr.numeroFiscal, codCliente, codAlmacen, puntosacum, numlin ;
+ FROM dbo.ALBVENTACAB Albventacab left outer join dbo.ALBVENTALIN Albventalin  ON Albventalin.NUMSERIE = Albventacab.NUMSERIE AND Albventalin.NUMALBARAN = Albventacab.NUMALBARAN   left outer join dbo.ARTICULOSLIN ON AlbVentaLin.codArticulo=ArticulosLin.codArticulo AND AlbVentaLin.talla=ArticulosLin.talla AND AlbVentaLin.color=ArticulosLin.color left outer join dbo.facturasVentaSeriesResol fvsr on Albventacab.numseriefac=fvsr.numSerie AND Albventacab.numfac=fvsr.numfactura  WHERE Albventacab.fecha >= ?m.desde AND Albventacab.fecha <= ?m.hasta 
+ 
+USE config
+REPLACE all cta_puntos_db with '13809510'
+REPLACE all cta_puntos_cr with '23809510'
+
+
+ CLOSE TABLE ALL
+ RETURN
+
+ALTER TABLE config ADD cta_puntos_db c(8)
+ALTER TABLE config ADD cta_puntos_cr c(8)
+ALTER TABLE config ADD cta_puntos_dto c(8)
+
+
+REPLACE all cta_puntos_db with '13809510'
+REPLACE all cta_puntos_db with '23809510'
+REPLACE all cta_puntos_dto with '41751010'
+
+
 CREATE SQL VIEW VistaPlanilla REMOTE CONNECTION ConexionICG as select * from pagos where fecha>=?m.desde and fecha<=?m.hasta AND (codconceptopago=2 OR codconceptopago=3)
 CREATE SQL VIEW vistaCobros REMOTE CONNECTION ConexionICG as select * from Tesoreria where fechaSaldado>=?m.desde AND fechaSaldado<=?m.hasta AND comentario<>'' AND origen='C' AND tipodocumento='F'
 CREATE SQL VIEW VistaCuadreCaja as select Temporal.fecha, Temporal.sucursal, sum(Temporal.debito) as debito,;
@@ -12,9 +34,6 @@ CREATE SQL VIEW VistaCuadreCaja as select Temporal.fecha, Temporal.sucursal, sum
  CREATE SQL VIEW VistaPagosCaja REMOTE CONNECTION conexionICG AS select caja, numero, fecha, importe, comentario, codmediopago, codconceptopago, tipomovcaja, z from pagos where fecha>=?m.desde AND fecha<=?m.hasta
 
 
-
- CLOSE TABLE ALL
- RETURN
 CREATE SQL VIEW vistaCobros REMOTE CONNECTION ConexionICG as select * from Tesoreria where fechaSaldado>=?m.desde AND fechaSaldado<=?m.hasta AND comentario<>'' AND origen='C' AND tipodocumento='F'
 CREATE SQL VIEW VistaPlanilla REMOTE CONNECTION ConexionICG as select * from pagos where fecha>=?m.desde and fecha<=?m.hasta AND codconceptopago=2
 
