@@ -59,7 +59,7 @@
     	LEFT JOIN almacenes ON SUBSTR(vistasucursales.cajamanager, 1, 2)==almacenes.codalmacen ;
     	LEFT JOIN pagoUnico AS pu ON vistaventas.fecha=pu.fecha AND vistaventas.numserie=pu.serie AND vistaventas.numalbaran=pu.numero ;
     	WHERE tipoimpuesto<>3 AND LEN(ALLTRIM(caja))>0 ; && AND SUBSTR(vistaventas.numserie, 4, 1)<>'I'
-    UNION ALL SELECT vistapagos.fecha, formaspago.cuenta, almacenes.idfront AS sucursal, importe AS debito, 000000000000000.00  AS credito, IIF(LEN(ALLTRIM(formaspago.nit))>0, formaspago.nit, IIF(formaspago.credito, ALLTRIM(IIF(ISNULL(cif), "", cif)), nit_varios)) AS tercero, 3, 1 AS naturaleza, 000000000000000.00  AS base, formaspago.cc AS cc, "INTERFAZ ICG - PAGOS                   " AS descripcio, formaspago.credito AS vtacredito, IIF(formaspago.credito, IIF(formaspago.numerofiscal, vistapagos.numerofiscal, getconsecutivo2(vistapagos.fecha)), 000000) AS numfac, IIF((pu.codformapago='19' AND cuantos=1) OR (pu.codformapago='19' AND cuantos>1 AND importe>0), 010, almacenes.idfront) AS sucursale, pu.codformapago, cuantos, 03 as orden, formasPago.descripcion as descripci2, vistaPagos.serie, vistaPagos.numero ;
+    UNION ALL SELECT vistapagos.fecha, formaspago.cuenta, almacenes.idfront AS sucursal, IIF(importe>=0,importe,000000000000000.00) AS debito, IIF(importe<0,-importe,000000000000000.00)  AS credito, IIF(LEN(ALLTRIM(formaspago.nit))>0, formaspago.nit, IIF(formaspago.credito, ALLTRIM(IIF(ISNULL(cif), "", cif)), nit_varios)) AS tercero, 3, IIF(importe>=0,1,2) AS naturaleza, 000000000000000.00  AS base, formaspago.cc AS cc, "INTERFAZ ICG - PAGOS                   " AS descripcio, formaspago.credito AS vtacredito, IIF(formaspago.credito, IIF(formaspago.numerofiscal, vistapagos.numerofiscal, getconsecutivo2(vistapagos.fecha)), 000000) AS numfac, IIF((pu.codformapago='19' AND cuantos=1) OR (pu.codformapago='19' AND cuantos>1 AND importe>0), 010, almacenes.idfront) AS sucursale, pu.codformapago, cuantos, 03 as orden, formasPago.descripcion as descripci2, vistaPagos.serie, vistaPagos.numero ;
     	FROM vistaPagos LEFT JOIN formasPago ON vistapagos.codformapago=formaspago.codformapago ;
     	LEFT JOIN vistaSucursales ON vistapagos.caja=vistasucursales.cajamanager ;
     	LEFT JOIN almacenes ON SUBSTR(vistasucursales.cajamanager, 1, 2)==almacenes.codalmacen ;
@@ -250,11 +250,19 @@
        SCAN
           REPLACE consecutiv WITH getconsecutivo("consecutivo")
        ENDSCAN
-       SELECT "RV" AS tipodocumento, consecutiv AS numerodoc, ventas.fecha, ventas.cuenta, ventas.sucursal, ROUND(SUM(IIF(debito>=0, debito, 0)+IIF(credito<0, -credito,0)), 0) AS debito, ROUND(SUM(IIF(credito>=0, credito,0)+IIF(debito<0,-debito,0)), 0) AS credito, ROUND(SUM(base), 0) AS base, tercero, cc, descripcio, vtacredito, numfac, ventas.sucursale, orden ;
+       SELECT "RV" AS tipodocumento, consecutiv AS numerodoc, ventas.fecha, ventas.cuenta, ventas.sucursal, ROUND(SUM(debito), 0) AS debito, ROUND(SUM(credito), 0) AS credito, ROUND(SUM(base), 0) AS base, tercero, cc, descripcio, vtacredito, numfac, ventas.sucursale, orden ;
        	FROM ventas LEFT JOIN consecutivos ON ventas.fecha=consecutivos.fecha AND ventas.sucursal=consecutivos.sucursal ;
-       	WHERE debito<>0 OR credito<>0 GROUP BY ventas.fecha, tipodocumento, cuenta, descripcio, tercero, ventas.sucursal, IIF(debito>=0 AND credito>=0,naturaleza,3-naturaleza), cc, numfac, ventas.sucursale, orden ;
+       	WHERE debito<>0 OR credito<>0 GROUP BY ventas.fecha, tipodocumento, cuenta, descripcio, tercero, ventas.sucursal, naturaleza, cc, numfac, ventas.sucursale, orden ;
        	ORDER BY ventas.fecha, tipodocumento, numerodoc INTO CURSOR c1
+
+*!*	       SELECT "RV" AS tipodocumento, consecutiv AS numerodoc, ventas.fecha, ventas.cuenta, ventas.sucursal, ROUND(SUM(IIF(debito>=0, debito, 0)+IIF(credito<0, -credito,0)), 0) AS debito, ROUND(SUM(IIF(credito>=0, credito,0)+IIF(debito<0,-debito,0)), 0) AS credito, ROUND(SUM(base), 0) AS base, tercero, cc, descripcio, vtacredito, numfac, ventas.sucursale, orden ;
+*!*	       	FROM ventas LEFT JOIN consecutivos ON ventas.fecha=consecutivos.fecha AND ventas.sucursal=consecutivos.sucursal ;
+*!*	       	WHERE debito<>0 OR credito<>0 GROUP BY ventas.fecha, tipodocumento, cuenta, descripcio, tercero, ventas.sucursal, naturaleza, cc, numfac, ventas.sucursale, orden ;
+*!*	       	ORDER BY ventas.fecha, tipodocumento, numerodoc INTO CURSOR c1
+
+
        copiar3("c1")
+
        SELECT consecutivos
        USE
        
