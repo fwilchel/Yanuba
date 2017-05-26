@@ -2,6 +2,8 @@
  m.desde = DATE()-30
  m.hasta = DATE()-30
 
+CREATE SQL VIEW VistaPuntosPromociones REMOTE CONNECTION ConexionICG as select * from EXTRACTOPROMOCIONESTARJETA  order by idtarjeta, fecha
+CREATE SQL VIEW VistaPuntosVencidos REMOTE CONNECTION ConexionICG as select * from EXTRACTOPROMOCIONESTARJETA where fecha>=?m.desde AND fecha<?m.hasta AND SUBSTRing(descripcion,1,15)='PUNTOS VENCIDOS'
 CREATE SQL VIEW vistaCobros REMOTE CONNECTION ConexionICG as select * from Tesoreria where fechaSaldado>=?m.desde AND fechaSaldado<=?m.hasta AND comentario<>'' AND origen='C' AND tipodocumento='F'
 CREATE SQL VIEW VistaPlanilla REMOTE CONNECTION ConexionICG as select * from pagos where fecha>=?m.desde and fecha<=?m.hasta AND (codconceptopago=2 OR codconceptopago=3)
 

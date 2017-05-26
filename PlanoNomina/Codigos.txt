@@ -1,0 +1,8 @@
+012 Recargo nocturno
+013 Horas Extras Diurnas
+014 Horas Extras nocturnas
+016 Horas Festivas
+018 Horas ordinarias
+019 Horas extras festivas diurnas
+020 Horas Extras festivas nocturnas
+076 Propinas

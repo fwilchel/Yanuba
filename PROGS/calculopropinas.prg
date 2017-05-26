@@ -1,4 +1,95 @@
  SET SAFETY OFF
+
+
+
+
+
+
+
+ use horas
+ SET ORDER TO vendedor
+ SET FILTER TO desde=m.desde .AND. hasta=m.hasta
+ REPLACE rol WITH 0 ALL FOR desde=m.desde .AND. hasta=m.hasta
+ SELECT 0
+ USE vendedores
+ SCAN FOR rol<>0 .AND. rol2=0 .AND. rol3=0
+    m.codvendedor = id
+    m.rol = rol
+    SELECT horas
+    REPLACE rol WITH m.rol ALL FOR m.codvendedor=codvendedor .AND. desde=m.desde .AND. hasta=m.hasta
+    SELECT vendedores
+ ENDSCAN
+ SELECT vendedores
+ SCAN FOR rol<>0 .AND. rol2<>0 .AND. rol3=0
+    m.codvendedor = id
+    m.rol1 = rol
+    m.rol2 = rol2
+    cual = 1
+    SELECT horas
+    SCAN FOR m.codvendedor=codvendedor .AND. desde=m.desde .AND. hasta=m.hasta
+       DO CASE
+          CASE cual=1
+             REPLACE rol WITH m.rol1
+          CASE cual=2
+             REPLACE rol WITH m.rol2
+          OTHERWISE
+       ENDCASE
+       cual = cual+1
+       SCATTER MEMVAR
+    ENDSCAN
+    IF cual=2
+       WAIT WINDOW "Falta un registro de hrs para el codvendedor "+ALLTRIM(STR(m.codvendedor))+" se corrige duplicando"
+       m.rol = m.rol2
+       INSERT INTO horas FROM MEMVAR
+    ENDIF
+    SELECT vendedores
+ ENDSCAN
+ SCAN FOR rol<>0 .AND. rol2<>0 .AND. rol3<>0
+    m.codvendedor = id
+    m.rol1 = rol
+    m.rol2 = rol2
+    m.rol3 = rol3
+    cual = 1
+    SELECT horas
+    SCAN FOR m.codvendedor=codvendedor .AND. desde=m.desde .AND. hasta=m.hasta
+       DO CASE
+          CASE cual=1
+             REPLACE rol WITH m.rol1
+          CASE cual=2
+             REPLACE rol WITH m.rol2
+          CASE cual=3
+             REPLACE rol WITH m.rol3
+          OTHERWISE
+       ENDCASE
+       cual = cual+1
+       SCATTER MEMVAR
+    ENDSCAN
+    IF cual=2
+       WAIT WINDOW "Falta un registro de hrs para el codvendedor "+ALLTRIM(STR(m.codvendedor))+" se corrige duplicando"
+       m.rol = m.rol2
+       INSERT INTO horas FROM MEMVAR
+       m.rol = m.rol3
+       INSERT INTO horas FROM MEMVAR
+    ENDIF
+    IF cual=3
+       m.rol = m.rol3
+       INSERT INTO horas FROM MEMVAR
+    ENDIF
+    SELECT vendedores
+ ENDSCAN
+ SELECT horas
+ REPLACE rol WITH IIF(codalmacen='A1', 29, 22) FOR rol=0 .AND. cedula<2000 .AND. desde=m.desde .AND. hasta=m.hasta
+SELECT vendedores
+USE
+
+
+
+
+
+
+
+
+
  CLOSE TABLE ALL
  todos = .T.
  
@@ -15,10 +106,10 @@
  
  
  && Lo que hay que sumar y restar de otras calles
- SELECT ALLTRIM(caja) AS codalmacen, 00000000000000.00  AS mas, SUM(propina4mil) AS menos;
+ SELECT ALLTRIM(caja) AS codalmacen, 00000000000000.00  AS mas, SUM(propina4mil*.4) AS menos;
   FROM otrascalles GROUP BY caja ;
   UNION ALL ;
- SELECT ALLTRIM(codalmacen), SUM(propina4mil), 000000000000000.00 ;
+ SELECT ALLTRIM(codalmacen), SUM(propina4mil*.4), 000000000000000.00 ;
   FROM Otrascalles GROUP BY codalmacen INTO CURSOR otrascalles2
   
   
@@ -44,18 +135,23 @@
   
   
   && Vendedor, almacen base, rol, y horas
- SELECT v.id, IIF(ISNULL(v.nombre),SPACE(254), v.nombre) as nombre, v.rol AS codrol, r.rol AS nombrerol, v.codalmacen AS codalmacenbase, a.nombrealmacen AS nombrealmacenbase, vv.numssocial AS cedula, h.horas AS horas, h.codalmacen AS codalm, a2.nombrealmacen;
-  FROM vendedores AS v INNER JOIN vistavendedores AS vv ON v.id=vv.codvendedor INNER JOIN roles AS r ON v.rol=r.id INNER JOIN horasC AS h ON h.codvendedor=v.id AND h.rol=v.rol LEFT JOIN almacenes AS a ON v.codalmacen=a.codalmacen LEFT JOIN almacenes AS a2 ON h.codalmacen=a2.codalmacen ;
+  
+  &&   AND h.codalmacen=v.codalmacen ; Para Rol 3
+  
+  
+ SELECT v.id, IIF(ISNULL(v.nombre),SPACE(254), v.nombre) as nombre, v.rol AS codrol, r.rol AS nombrerol, v.codalmacen AS codalmacenbase, a.nombrealmacen AS nombrealmacenbase, vv.numssocial AS cedula, h.horas AS horas, h.codalmacen AS codalm, a2.nombrealmacen, cc;
+  FROM vendedores AS v INNER JOIN vistavendedores AS vv ON v.id=vv.codvendedor INNER JOIN roles AS r ON v.rol=r.id INNER JOIN horasC AS h ON h.codvendedor=v.id AND h.rol=v.rol ;
+  LEFT JOIN almacenes AS a ON v.codalmacen=a.codalmacen LEFT JOIN almacenes AS a2 ON h.codalmacen=a2.codalmacen ;
  UNION ALL;
- SELECT v.id, IIF(ISNULL(v.nombre),SPACE(254), v.nombre) as nombre, v.rol2 AS codrol, r.rol AS nombrerol, v.codalmacen AS codalmacenbase, a.nombrealmacen AS nombrealmacenbase, vv.numssocial AS cedula, h.horas AS horas, h.codalmacen AS codalm, a2.nombrealmacen;
+ SELECT v.id, IIF(ISNULL(v.nombre),SPACE(254), v.nombre) as nombre, v.rol2 AS codrol, r.rol AS nombrerol, v.codalmacen AS codalmacenbase, a.nombrealmacen AS nombrealmacenbase, vv.numssocial AS cedula, h.horas AS horas, h.codalmacen AS codalm, a2.nombrealmacen, cc;
   FROM vendedores AS v INNER JOIN vistavendedores AS vv ON v.id=vv.codvendedor INNER JOIN roles AS r ON v.rol2=r.id INNER JOIN horasC AS h ON h.codvendedor=v.id AND h.rol=v.rol2 ;
   LEFT JOIN almacenes AS a ON v.codalmacen=a.codalmacen LEFT JOIN almacenes AS a2 ON h.codalmacen=a2.codalmacen;
  UNION ALL ;
- SELECT v.id, IIF(ISNULL(v.nombre),SPACE(254), v.nombre) as nombre, v.rol3 AS codrol, r.rol AS nombrerol, v.codalmacen AS codalmacenbase, a.nombrealmacen AS nombrealmacenbase, vv.numssocial AS cedula, h.horas AS horas, h.codalmacen AS codalm, a2.nombrealmacen ;
-  FROM vendedores AS v INNER JOIN vistavendedores AS vv ON v.id=vv.codvendedor INNER JOIN roles AS r ON v.rol3=r.id INNER JOIN horasC AS h ON h.codvendedor=v.id AND h.rol=v.rol3 AND h.codalmacen=v.codalmacen ;
+ SELECT v.id, IIF(ISNULL(v.nombre),SPACE(254), v.nombre) as nombre, v.rol3 AS codrol, r.rol AS nombrerol, v.codalmacen AS codalmacenbase, a.nombrealmacen AS nombrealmacenbase, vv.numssocial AS cedula, h.horas AS horas, h.codalmacen AS codalm, a2.nombrealmacen, cc ;
+  FROM vendedores AS v INNER JOIN vistavendedores AS vv ON v.id=vv.codvendedor INNER JOIN roles AS r ON v.rol3=r.id INNER JOIN horasC AS h ON h.codvendedor=v.id AND h.rol=v.rol3 ;
   LEFT JOIN almacenes AS a ON v.codalmacen=a.codalmacen LEFT JOIN almacenes AS a2 ON h.codalmacen=a2.codalmacen ;
  UNION ALL ;
- SELECT -cedula AS id, IIF(ISNULL(nombre),SPACE(100),nombre)+SPACE(154) AS nombre, horas.rol AS codrol, r.rol AS nombrerol, horas.codalmacen AS codalmacenbase, a.nombrealmacen AS nombrealmacenbase, ALLTRIM(STR(horas.cedula))+SPACE(8) AS cedula, horas.horas, horas.codalmacen AS codalm, a.nombrealmacen AS nombrealmacen;
+ SELECT -cedula AS id, IIF(ISNULL(nombre),SPACE(100),nombre)+SPACE(154) AS nombre, horas.rol AS codrol, r.rol AS nombrerol, horas.codalmacen AS codalmacenbase, a.nombrealmacen AS nombrealmacenbase, ALLTRIM(STR(horas.cedula))+SPACE(8) AS cedula, horas.horas, horas.codalmacen AS codalm, a.nombrealmacen AS nombrealmacen, cc;
   FROM horas LEFT JOIN roles AS r ON horas.rol=r.id LEFT JOIN almacenes AS a ON horas.codalmacen=a.codalmacen;
   WHERE cedula<2000 ORDER BY 2 INTO CURSOR paso1previo
 
@@ -70,9 +166,9 @@
  COPY TO paso2.xls TYPE XLS
  
  
- 
+&& IIF(p.rol=1 OR p.rol=2 OR p.rol=21 OR p.rol=27 OR p.rol=29, porcentaje, horas*porcentaje/240)*IIF(p.rol=1, propina4mil+mas-menos, propina4mil)/100/p2.horas AS valor_hora 
  && Cálculo de valor hora por almacen
- SELECT p.codalmacen, a.nombrealmacen, p.rol AS codrol, r.rol, porcentaje, p2.horas, IIF(p.rol=1 OR p.rol=2, porcentaje, IIF(p.rol=21 OR p.rol=27 OR p.rol=29, horas*100/(cuantos*240)*porcentaje/100, horas*porcentaje/240)) AS porcentaje2, IIF(p.rol=1 OR p.rol=2 OR p.rol=21 OR p.rol=27 OR p.rol=29, porcentaje, horas*porcentaje/240)*IIF(p.rol=1, propina4mil+mas-menos, propina4mil)/100/p2.horas AS valor_hora;
+ SELECT p.codalmacen, a.nombrealmacen, p.rol AS codrol, r.rol, porcentaje, p2.horas, IIF(p.rol=1 OR p.rol=2, porcentaje, IIF(p.rol=21 OR p.rol=27 OR p.rol=29, horas*100/(cuantos*240)*porcentaje/100, horas*porcentaje/240)) AS porcentaje2, porcentaje/horas * IIF(p.rol=1, propina4mil+mas-menos, propina4mil)/100 AS valor_hora, IIF(p.rol=1 OR p.rol=2 OR p.rol=21 OR p.rol=27 OR p.rol=29, porcentaje, horas*porcentaje/240)*IIF(p.rol=1, propina4mil+mas-menos, propina4mil)/100/p2.horas AS valor_hora2;
   FROM porcentajes AS p LEFT JOIN roles AS r ON r.id=p.rol LEFT JOIN almacenes AS a ON a.codalmacen=p.codalmacen LEFT JOIN paso2 AS p2 ON p2.codalmacen=p.codalmacen AND p2.codrol=p.rol;
    LEFT JOIN propinasPoralmacen AS ppa ON p.codalmacen=ppa.caja;
   WHERE horas>0 OR p.rol=2;
@@ -82,7 +178,7 @@
  
  
  COPY TO paso3.xls TYPE XLS
- BROWSE NOAPPEND NODELETE NORMAL TITLE 'Recalculo de porcentajes según horas laboradas'
+ BROWSE NOAPPEND NODELETE NORMAL TITLE 'Recálculo de porcentajes según horas laboradas'
  SELECT paso2
  BROWSE NOAPPEND NODELETE NORMAL TITLE 'Horas y número de personas por rol'
  SELECT paso1
@@ -98,8 +194,8 @@
  
  
  
- SELECT p1.codalm AS codalmacen, SUM(IIF(codrol=22, horas, horas/2)) AS sum_horas;
-  FROM paso1 AS p1 WHERE (p1.codrol=22 OR p1.codrol=30) AND codalmacenbase=codalm;
+ SELECT p1.codalm AS codalmacen, SUM(IIF(codrol=22 OR codrol=8, horas, horas/2)) AS sum_horas;
+  FROM paso1 AS p1 WHERE (p1.codrol=22 OR p1.codrol=30 OR p1.codrol=8) AND codalmacenbase=codalm;
    GROUP BY 1 INTO CURSOR personalBase
  
  SELECT pb.codalmacen, pb.sum_horas, pa.propina4mil, p4.restante, propina4mil*restante/100/sum_horas AS valor_hora;
@@ -108,7 +204,7 @@
  COPY TO paso5.xls TYPE XLS
  
  
- SELECT paso3.*, IIF(codrol=22, 1, paso3.valor_hora/vlrhorarol22.valor_hora) AS factor;
+ SELECT paso3.*, IIF(codrol=22 OR codrol=8, 1, paso3.valor_hora/vlrhorarol22.valor_hora) AS factor;
   FROM paso3 LEFT JOIN vlrHoraRol22 ON paso3.codalmacen=vlrhorarol22.codalmacen;
    WHERE paso3.codalmacen='B1' AND vlrhorarol22.codalmacen='B1';
     INTO CURSOR factores
@@ -123,7 +219,7 @@
  
  SELECT p1.cedula, p1.nombre, p1.codrol, p1.nombrerol, p1.codalmacenbase, p1.nombrealmacenbase, p1.codalm, p1.nombrealmacen, p1.horas, p3.valor_hora, p1.horas*p3.valor_hora AS propina, factor;
   FROM paso1 AS p1 LEFT JOIN vlrHoraRol22 AS p3 ON p1.codalm=p3.codalmacen LEFT JOIN factores ON p1.codrol=factores.codrol;
-   WHERE p1.codalm<>'B7' AND p1.codalmacenbase<>'B7' AND codalmacenbase<>codalm AND p1.codrol<>4 AND p1.codrol<>3 AND p1.codrol<>1;
+   WHERE p1.codalm<>'B5' AND p1.codalmacenbase<>'B5' AND p1.codalm<>'B7' AND p1.codalmacenbase<>'B7' AND codalmacenbase<>codalm AND p1.codrol<>4 AND p1.codrol<>3 AND p1.codrol<>1 AND p1.codrol<>39 AND p1.codrol<>38 AND p1.codrol<>12 AND p1.codrol<>18;
     INTO CURSOR factores1
 
  COPY TO factores1.xls TYPE XLS
@@ -133,39 +229,47 @@
   FROM factores1 GROUP BY 1 INTO CURSOR factores2
  COPY TO factores2.xls TYPE XLS
  
+ 
+ && Rol 18 corresponde Fines de semana, calculo del valor hora para los Fines semana que se trabajan en la B4 y B6. Personas que vienen de la B1
  SELECT codalmacen, propina4mil*porcentaje/100 AS valor, nuevashoras, propina4mil*porcentaje/100/nuevashoras AS valorhora;
   FROM propinasporalmacen AS ppa INNER JOIN porcentajes AS p ON p.codalmacen=ppa.caja INNER JOIN factores2 AS f ON f.codalm=ppa.caja;
    WHERE INLIST(codalmacen, 'B4', 'B6') AND rol=18 INTO CURSOR factores3
  COPY TO factores3.xls TYPE XLS
  
+ && p1.codrol<>22 AND p1.codrol<>8 AND p1.codrol<>30 AND 
+ &&
  
- 
- SELECT p1.cedula, p1.nombre, p1.codrol, p1.nombrerol, p1.codalmacenbase, p1.nombrealmacenbase, p1.codalm, p1.nombrealmacen, p1.horas, p3.valor_hora, p1.horas*p3.valor_hora AS propina;
+ SELECT p1.cedula, p1.nombre, p1.codrol, p1.nombrerol, p1.codalmacenbase, p1.nombrealmacenbase, p1.codalm, p1.nombrealmacen, p1.horas, p3.valor_hora, p1.horas*p3.valor_hora AS propina, 1, cc;
   FROM paso1 AS p1 LEFT JOIN paso3 AS p3 ON p1.codalm=p3.codalmacen AND p1.codrol=p3.codrol;
-   WHERE p1.codrol<>22 AND p1.codrol<>30 AND p1.codrol<>21 AND p1.codalm<>'B7' AND  NOT (p1.codalmacenbase<>'B7' AND codalmacenbase<>codalm AND p1.codrol<>4 AND p1.codrol<>3 AND p1.codrol<>1);
+   WHERE p1.codrol<>21 AND p1.codalm<>'B5' AND p1.codalm<>'B7' AND NOT ((p1.codalmacenbase<>'B5' OR p1.codalmacenbase<>'B7') AND codalmacenbase<>codalm AND p1.codrol<>4 AND p1.codrol<>12 AND p1.codrol<>3 AND p1.codrol<>1 AND p1.codrol<>39 AND p1.codrol<>18);
  UNION ALL;
-   SELECT p1.cedula, p1.nombre, p1.codrol, p1.nombrerol, p1.codalmacenbase, p1.nombrealmacenbase, p1.codalm, p1.nombrealmacen, p1.horas, p3.valor_hora, p1.horas*p3.valor_hora AS propina;
+   SELECT p1.cedula, p1.nombre, p1.codrol, p1.nombrerol, p1.codalmacenbase, p1.nombrealmacenbase, p1.codalm, p1.nombrealmacen, p1.horas, p3.valor_hora, p1.horas*p3.valor_hora AS propina, 2, cc;
     FROM paso1 AS p1 LEFT JOIN paso3 AS p3 ON p1.codalmacenbase=p3.codalmacen AND p1.codrol=p3.codrol;
-     WHERE p1.codrol=21 AND p1.codalm<>'B7';
+     WHERE p1.codrol=21 AND p1.codalm<>'B5' AND p1.codalm<>'B7';
  UNION ALL;
-  SELECT p1.cedula, p1.nombre, p1.codrol, p1.nombrerol, p1.codalmacenbase, p1.nombrealmacenbase, p1.codalm, p1.nombrealmacen, p1.horas, p3.valor_hora, p1.horas*p3.valor_hora AS propina ;
-  FROM paso1 AS p1 LEFT JOIN vlrHoraRol22 AS p3 ON p1.codalm=p3.codalmacen ;
-  WHERE p1.codrol=22 AND p1.codalm<>'B7' AND  NOT (p1.codalmacenbase<>'B7' AND codalmacenbase<>codalm AND p1.codrol<>4 AND p1.codrol<>3 AND p1.codrol<>1);
- UNION ALL;
-  SELECT p1.cedula, p1.nombre, p1.codrol, p1.nombrerol, p1.codalmacenbase, p1.nombrealmacenbase, p1.codalm, p1.nombrealmacen, p1.horas, p3.valor_hora/2, p1.horas*p3.valor_hora/2 AS propina ;
-  FROM paso1 AS p1 LEFT JOIN vlrHoraRol22 AS p3 ON p1.codalm=p3.codalmacen ;
-  WHERE p1.codrol=30 AND p1.codalm<>'B7';
- UNION ALL;
-  SELECT p1.cedula, p1.nombre, p1.codrol, p1.nombrerol, p1.codalmacenbase, p1.nombrealmacenbase, p1.codalm, p1.nombrealmacen, IIF(ISNULL(p1.horas*factores.factor),0,p1.horas*factores.factor) AS horas, p3.valorhora, p1.horas*factores.factor*p3.valorhora AS propina ;
+  SELECT p1.cedula, p1.nombre, p1.codrol, p1.nombrerol, p1.codalmacenbase, p1.nombrealmacenbase, p1.codalm, p1.nombrealmacen, IIF(ISNULL(p1.horas*factores.factor),0,p1.horas*factores.factor) AS horas, p3.valorhora, p1.horas*factores.factor*p3.valorhora AS propina, 3, cc ;
   FROM paso1 AS p1 LEFT JOIN factores3 AS p3 ON p1.codalm=p3.codalmacen LEFT JOIN factores ON p1.codrol=factores.codrol ;
-  WHERE p1.codalm<>'B7' AND p1.codalmacenbase<>'B7' AND codalmacenbase<>codalm AND p1.codrol<>4 AND p1.codrol<>3 AND p1.codrol<>1 ;
+  WHERE p1.codalm<>'B5' AND p1.codalmacenbase<>'B5' AND p1.codalm<>'B7' AND p1.codalmacenbase<>'B7' AND codalmacenbase<>codalm AND p1.codrol<>4 AND p1.codrol<>12 AND p1.codrol<>3 AND p1.codrol<>1 AND p1.codrol<>39 AND p1.codrol<>18 AND p1.codrol<>0 AND IIF(ISNULL(p1.horas*factores.factor),0,p1.horas*factores.factor)<>0;
  UNION ALL ;
- SELECT p1.cedula, p1.nombre, p1.codrol, p1.nombrerol, p1.codalmacenbase, p1.nombrealmacenbase, p1.codalm, p1.nombrealmacen, p1.horas, m.vlrplantaproduccion*p3.porcentaje/100/p2.horas, m.vlrplantaproduccion*p3.porcentaje/100/p2.horas*p1.horas ;
+ SELECT p1.cedula, p1.nombre, p1.codrol, p1.nombrerol, p1.codalmacenbase, p1.nombrealmacenbase, p1.codalm, p1.nombrealmacen, p1.horas, m.vlrplantaproduccion*p3.porcentaje/100/p2.horas, m.vlrplantaproduccion*p3.porcentaje/100/p2.horas*p1.horas, 4,cc ;
  FROM paso1 AS p1 LEFT JOIN paso3 AS p3 ON p1.codalm=p3.codalmacen AND p1.codrol=p3.codrol LEFT JOIN paso2 AS p2 ON p2.codalmacen=p1.codalm AND p2.codrol=p1.codrol ;
- WHERE p3.codalmacen='B7' AND p1.codalm='B7' ORDER BY 5, 2 INTO CURSOR planilla
+ WHERE (p3.codalmacen='B5' AND p1.codalm='B5') OR (p3.codalmacen='B7' AND p1.codalm='B7') ORDER BY 5, 2 INTO CURSOR planilla
+
+*!*	  SELECT p1.cedula, p1.nombre, p1.codrol, p1.nombrerol, p1.codalmacenbase, p1.nombrealmacenbase, p1.codalm, p1.nombrealmacen, p1.horas, p3.valor_hora, p1.horas*p3.valor_hora AS propina ;
+*!*	  FROM paso1 AS p1 LEFT JOIN vlrHoraRol22 AS p3 ON p1.codalm=p3.codalmacen ;
+*!*	  WHERE (p1.codrol=22 OR p1.codrol=8) AND p1.codalm<>'B7' AND  NOT (p1.codalmacenbase<>'B7' AND codalmacenbase<>codalm AND p1.codrol<>4 AND p1.codrol<>3 AND p1.codrol<>1);
+*!*	 UNION ALL;
+*!*	  SELECT p1.cedula, p1.nombre, p1.codrol, p1.nombrerol, p1.codalmacenbase, p1.nombrealmacenbase, p1.codalm, p1.nombrealmacen, p1.horas, p3.valor_hora/2, p1.horas*p3.valor_hora/2 AS propina ;
+*!*	  FROM paso1 AS p1 LEFT JOIN vlrHoraRol22 AS p3 ON p1.codalm=p3.codalmacen ;
+*!*	  WHERE p1.codrol=30 AND p1.codalm<>'B7';
+*!*	 UNION ALL;
+&&
  
  SELECT planilla
  BROWSE NOAPPEND NOEDIT NODELETE NORMAL
+ 
+ COPY TO data\planilla
+ 
  
  CALCULATE SUM(propina) TO total1 
  COPY TO planilla.xls TYPE XLS
@@ -177,7 +281,7 @@
  COPY TO resumen.xls TYPE XLS
  
  
- 
+ DO generarPlanoPropinas
  
  &&CLOSE TABLE ALL
  RETURN

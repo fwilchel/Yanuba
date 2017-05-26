@@ -1,0 +1,23 @@
+<script type="text/javascript">
+   console.log("sii"+'%user:name'+'fgwl')
+    var jqxhr = jQuery.ajax({
+        type: "POST",
+        url: "/sites/all/themes/yanuba/templates/cbp-puntos-get.php",
+        data:{cc:'%user:name'},
+        success: function(data){
+          console.log(data)
+           if(data==''){
+                      alert( "Tus datos se encuentran en proceso de registro y aprobación, pronto recibirás un correo electrónico que te dará la bienvenida al Club del Buen Provecho®. Si ya lo has recibido y aun no puedes ver tus puntos, comunícate con nosotros.");
+            }
+            jQuery(".cbp-loader").html("");
+            var obj = JSON.parse(data);
+            jQuery("#puntos-acumulados").text(obj.puntosAcumulados);
+            jQuery("#puntos-por-vencer").text(obj.puntosAcumulados);
+            jQuery("#fecha-vencimiento-puntos").text(obj.caducidad);
+            jQuery("#nombre-usuario-cbp").text(obj. nombre);
+        }
+
+    }).fail(function(data) {
+        alert( "Hubo un error en la consulta de tus puntos, intenta más tarde o comunícate con nosotros" );
+    });
+</script>

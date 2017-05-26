@@ -1,0 +1,70 @@
+
+------------------------------------------------------------------------------------------------------------------------------------
+| 20150123  12:33                                               MILSEN S.A.                                                        |
+|  URNM1023                                       ** CATALOGO DE CONCEPTOS **                                           PAG : 01   |
+|                                                                                                                                  |
+------------------------------------------------------------------------------------------------------------------------------------
+| COD. DESCRIPCION                               ABREV.    T I P O      M O D O                                 AGRU    %    IN BAS|
+------------------------------------------------------------------------------------------------------------------------------------
+  001  SUELDO                                    SUELDO    DEVENGO      1.  TIEMPO LABORADO                           100.00    1
+  005  CUOTA APOYO Y SOSTENIMIENTO SENA          CUO-SEN   DEVENGO      1.  TIEMPO LABORADO                           100.00    1
+  012  RECARGO NOCTURNO NORMAL                   REC-NOC   DEVENGO      1.  TIEMPO LABORADO                            35.00    0
+  013  HORAS EXTRAS DIURNAS                      HEX-DIU   DEVENGO      1.  TIEMPO LABORADO                           125.00    0
+  014  HORAS EXTRAS NOCTURNAS                    HEX-DIU   DEVENGO      1.  TIEMPO LABORADO                           175.00    0
+  015  RECARGO NOC DOMINICAL/FES                 RENDFES   DEVENGO      1.  TIEMPO LABORADO                           110.00    0
+  016  HORAS FESTIVAS                            DIA-DOM   DEVENGO      1.  TIEMPO LABORADO                           175.00    0
+  017  DIAS POR HORAS                            HOR-ORD   DEVENGO      1.  TIEMPO LABORADO                           100.00    1
+  018  HORAS ORDINARIAS                          HOR-ORD   DEVENGO      1.  TIEMPO LABORADO                           100.00    0
+  019  EXTRAS FESTIVAS DIURNAS                   HEF-DIUR  DEVENGO      1.  TIEMPO LABORADO                           200.00    0
+  020  EXTRAS FESTIVAS NOCTURNAS                 HEF-NOC   DEVENGO      1.  TIEMPO LABORADO                           250.00    0
+  026  PRIMA DE ANTIGUEDAD                       PRI-ANT   DEVENGO      12. PRIMA EXTRALEGAL
+  028  INDEMNIZACION                             INDEN     DEVENGO      19. INDEMNIZACION
+  030  SUBSIDIO DE ALIMENTACION                  SUB-ALI   DEVENGO      99. OTROS                                               0
+  031  SUBSIDIO FAMILIAR                         SUB-FAM   DEVENGO      99. OTROS                                               0
+  032  MANEJO TARJETA BANCOLOMBIA                TAR-CON   DEVENGO      7.  CUOTAS - EN ($)  GENERICA
+  033  AUXILIO DE TRANSPORTE                     AUX-TRA   DEVENGO      3.  SUBSIDIO DE TRANSPORTE
+  034  AUXILIO DE RODAMIENTO                     AUX-ROD   DEVENGO      7.  CUOTAS - EN ($) INDIVIDUAL
+  035  COMISION POR VENTAS                       CVENTAS   DEVENGO      99. OTROS                                               0
+  040  VACACIONES DISFRUTADAS                    VAC-DIS   DEVENGO      0.  TIEMPO NO LABORADO - VACACIONES      RT             1
+  041  VACACIONES COMPENSADAS                    VAC-COM   DEVENGO      99. OTROS                                               0
+  042  VACACIONES EN DIAS NO HABILES             VAC-NOH   DEVENGO      99. OTROS                                               0
+  043  RETROACTIVO VACACIONES                    RET-VAC   DEVENGO      99. OTROS                                               1
+  044  RETROACTIVO SUELDOS                       RETRO     DEVENGO      99. OTROS                                               0
+  045  SALDO EN ROJO                             SALROJO   DEDUCCION    50. SALDO ROJO
+  046  RETROACTIVO EXTRAS                        RETEX     DEVENGO      99. OTROS                                               0
+  050  PRIMA LEGAL                               PRI-SER   DEVENGO      10. PRIMA LEGAL
+  054  INTERESES Y CESANTIAS PAGADAS 2007        INTPAR07  DEVENGO      99. OTROS                                               0
+  055  CESANTIAS                                 CES-PAG   DEVENGO      13. CESANTIAS PAGADAS
+  056  INTERESES DE CESANTIAS                    INT-CES   DEVENGO      14. INTERESES SOBRE CESANTIAS
+  057  CONSIGNACION DE CESANTIAS                 CON-CES   DEVENGO      15. CONSIGNACION DE CESANTIAS
+  060  INCAPACIDAD PAGADA POR LA EMPRESA         INP-EMP   DEVENGO      99. OTROS                                               1
+  061  INCAPACIDAD ENFERMEDAD GENERAL            INC-ENG   DEVENGO      0.  TIEMPO NO LABORADO - INCAPACIDAD           66.66    1
+  062  INCAPACIDAD ACCIDENTE DE TRABAJO          INP-ACC   DEVENGO      0.  TIEMPO NO LABORADO - INCAPACIDAD          100.00    1
+  063  LICENCIA DE MATERNIDAD                    ILC-MAT   DEVENGO      0.  TIEMPO NO LABORADO - INCAPACIDAD                    1
+  064  AJUSTE LICENCIA DE MATERNIDAD             ALC-MAT   DEVENGO      0.  TIEMPO NO LABORADO - INCAPACIDAD                    1
+  070  BONIFICACION POR VACACIONES               BON-VAC   DEVENGO      99. OTROS                                               0
+  071  BONIFICACION POR ECONOMIA                 BON-VOL   DEVENGO      99. OTROS                                               0
+  074  PRIMA EXTRALEGAL                          PRI-EXT   DEVENGO      12. PRIMA EXTRALEGAL
+  076  PROPINAS DICIEMBRE 2014                   PRO-MES   DEVENGO      99. OTROS                                               0
+  500  ANTICIPOS EFECTIVO                        VAL-PER   DEDUCCION    99. OTROS                                               0
+  505  ANTICIPOS X COMPRAS                       VALES-CO  DEDUCCION    99. OTROS                                               0
+  510  PLAN EXEQUIAL                             POL-PAZ   DEDUCCION    7.  CUOTAS - EN ($) INDIVIDUAL
+  520  DESC. INVERFONDOS                         DES-INV   DEDUCCION    7.  CUOTAS - EN ($) INDIVIDUAL
+  521  CUOTA COOPEDUCAR LTDA                     COOPE     DEDUCCION    7.  CUOTAS - EN ($) INDIVIDUAL
+  522  SECREDITOS                                SECR      DEDUCCION    7.  CUOTAS - EN ($) INDIVIDUAL
+  530  APORTES FONDO DE EMERGENCIA               APO-FEM   DEDUCCION    7.  CUOTAS - EN ($) INDIVIDUAL
+  540  PRESTAMO EMPRESA                          PRE-EMP   DEDUCCION    8.  PRESTAMOS EMPRESA
+  550  PRESTAMO COLSUBSIDIO                      PRE-COL   DEDUCCION    7.  CUOTAS - EN ($) INDIVIDUAL
+  555  PRESTAMO INV. PICHINCHA                   PICHINCH  DEDUCCION    7.  CUOTAS - EN ($) INDIVIDUAL
+  558  CUOTA B. CREDITO                          B.CREDIT  DEDUCCION    7.  CUOTAS - EN ($) INDIVIDUAL
+  560  EMBARGOS CIVILES                          EMB-CIV   DEDUCCION    7.  CUOTAS  - PORCENTAJE SOBRE AGRUPACIONEJ
+  570  PERMISO NO REMUNERADO                     PER-NRE   DEDUCCION    0.  TIEMPO NO LABORADO
+  571  LICENCIA NO REMUNERADA                    LIC-NRE   DEDUCCION    0.  TIEMPO NO LABORADO
+  572  DIAS DE SANCION                           SANCION   DEDUCCION    0.  TIEMPO NO LABORADO
+  600  E.P.S.                                    APO-EPS   DEDUCCION    6.  E.P.S.                               SP
+  610  PENSION OBLIG.                            APO-PEN   DEDUCCION    16. PENSIONES                            SP
+  611  APORTE PENSION SOLIDARIDAD                APO-SOL   DEDUCCION    16. PENSIONES
+  620  RETENCION EN LA FUENTE                    RET-FTE   DEDUCCION    4.  RETENCION EN LA FUENTE               RT
+
+
+                                                         ** FIN LISTADO **

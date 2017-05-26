@@ -1,7 +1,62 @@
  OPEN DATABASE data\interfaz
  SET EXCLUSIVE ON
+
+ALTER TABLE horas ADD COLUMN cc c(5)
+
+
+
+ 
+ 
+ CLOSE TABLE ALL
+ RETURN
+
+ALTER TABLE almacenes ADD COLUMN co c(3)
+REPLACE co WITH "017" FOR ALLTRIM(codalmacen)=="B1"
+REPLACE co WITH "022" FOR ALLTRIM(codalmacen)=="B4"
+REPLACE co WITH "019" FOR ALLTRIM(codalmacen)=="B6"
+REPLACE co WITH "010" FOR ALLTRIM(codalmacen)=="B5"
+REPLACE co WITH "029" FOR ALLTRIM(codalmacen)=="B7"
+
+
+
+
+USE horas EXCLUSIVE
+INDEX ON nombre TAG nombre
+INDEX ON codalmacen TAG almacen
+
+
  m.desde = DATE()
  m.hasta = DATE()
+
+ = DBSETPROP("VistaVendedores.nomvendedor", "Field", "DataType", "c(100)")
+ = DBSETPROP("VistaPuntos.nombrecliente", "Field", "DataType", "c(100)")
+
+
+
+CREATE SQL VIEW VistaTarjetas REMOTE CONNECTION ConexionICG as SELECT clientes.codcliente, nif20, idtarjeta from tarjetas inner join clientes on tarjetas.codcliente=clientes.codcliente
+
+CREATE SQL VIEW VistaPuntosPromociones REMOTE CONNECTION ConexionICG as select * from EXTRACTOPROMOCIONESTARJETA  order by idtarjeta, fecha
+CREATE TABLE puntos (idlinea i(4), idtarjeta i(4), caja c(3), fecha datetime, descripcion c(50), puntos i(4), gastados i(4))
+CREATE TABLE puntosAplicados (idlinea1 i(4), idlinea2 i(4), idtarjeta i(4), caja c(3), fecha datetime, descripcion c(50), puntosAplicados i(4))
+
+
+
+ CREATE SQL VIEW VistaConceptosPago REMOTE CONNECTION ConexionICG AS select id, descripcion from conceptospago where movcaja='T'
+ CREATE SQL VIEW VistaConceptosDto REMOTE CONNECTION ConexionICG AS SELECT * from cargosDtos
+ CREATE SQL VIEW VistaAlmacenes REMOTE CONNECTION ConexionICG AS SELECT * from almacen
+  CREATE SQL VIEW VistaPagosCaja REMOTE CONNECTION conexionICG AS select caja, numero, fecha, importe, comentario, codmediopago, codconceptopago, tipomovcaja, z from pagos where fecha>=?m.desde AND fecha<=?m.hasta
+   CREATE SQL VIEW VistaAnticiposReservadas REMOTE CONNECTION conexionICG AS Select fecha as fechadocumento, importe, z as zsaldado, cajaorigen as cajasaldado from cobrospagos where tipo=5 AND fecha>=?m.desde AND fecha<=?m.hasta
+   CREATE SQL VIEW vistaCobros REMOTE CONNECTION ConexionICG as select * from Tesoreria where fechaSaldado>=?m.desde AND fechaSaldado<=?m.hasta AND comentario<>'' AND origen='C' AND tipodocumento='F'
+ 
+
+
+ALTER TABLE config ADD COLUMN porcentaje_domicilios n(10,2)
+REPLACE porcentaje_domicilios WITH 10
+
+ALTER TABLE config ADD COLUMN cuenta_domicilios c(8)
+REPLACE cuenta_domicilios WITH '28150505'
+
+
 
 
  CREATE SQL VIEW VistaVentas REMOTE CONNECTION ConexionICG AS SELECT Albventacab.NUMSERIE, Albventacab.NUMALBARAN, Albventacab.N, Albventacab.FECHA, precio, unidadespagadas, dto, total, iva, precioIva, tipoimpuesto, albVentaLin.codArticulo, caja, Albventacab.TOTALBRUTO, Albventacab.TOTALIMPUESTOS, albventalin.coste,  Albventacab.TOTALNETO, coste as precioDefecto, Albventacab.totDtoComercial, Albventacab.dtoComercial, ultimoCoste, unidadesTotal, fvsr.numeroFiscal, codCliente, codAlmacen, puntosacum, numlin ;
@@ -12,8 +67,6 @@ REPLACE all cta_puntos_db with '13809510'
 REPLACE all cta_puntos_cr with '23809510'
 
 
- CLOSE TABLE ALL
- RETURN
 
 ALTER TABLE config ADD cta_puntos_db c(8)
 ALTER TABLE config ADD cta_puntos_cr c(8)

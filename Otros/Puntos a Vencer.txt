@@ -1,0 +1,38 @@
+Puntos por vencer
+
+Tomar la minima fecha posterior(mayor) a hoy-1 año que recaudó puntos 
+y calcularle puntos a vencer a esa fecha mas 1 año
+
+
+
+
+
+Estructura 
+Panels
+A la derecha Club del bueno provecho -> Editar
+Panel : Estado de Cuenta -> Editar
+Izquierda: Contenido
+
+Left, Personalizado, Editar
+
+
+
+<div class="estado-de-cuenta">
+    <h1>Estado de cuenta</h1>
+    <div id="nombre-usuario-cbp"></div>
+    <p>Aquí encuentras el estado actual de tus puntos y todo el historial de tus consumos dentro del Club del Buen Provecho®.</p>
+    <div id="puntos-acumulados"></div>
+<p>
+    <h2>Puntos disponibles   </h2>
+<iframe src="http://www.yanuba.com/sites/all/themes/yanuba/templates/cbp-puntos-get.php?cc=<?php global $user;   print check_plain($user->name); ?>" frameborder="no"  scrolling="no" marginheight="0" marginwidth="0" width="200" height="50"></iframe>
+    <div class="recuadro-puntos">
+        <div class="puntos-por-vencer">
+            <h3>Puntos por vencer <div id="puntos-por-vencer"></div></h3>
+            
+        </div>
+        <h3>Fecha de vencimiento <div id="fecha-vencimiento-puntos"></div></h3>
+        
+    </div>
+</div>
+
+
