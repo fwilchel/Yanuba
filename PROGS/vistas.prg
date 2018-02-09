@@ -2,6 +2,10 @@
  m.desde = DATE()-30
  m.hasta = DATE()-30
 
+CREATE SQL VIEW VistaPuntos REMOTE CONNECTION ConexionICG as SELECT cast(Clientes.CODCLIENTE as int) as codcliente, Clientes.NOMBRECLIENTE;
+ FROM dbo.CLIENTES Clientes;
+ WHERE Clientes.NOMBRECLIENTE LIKE 'PUNTO%'
+
 CREATE SQL VIEW VistaPuntosPromociones REMOTE CONNECTION ConexionICG as select * from EXTRACTOPROMOCIONESTARJETA  order by idtarjeta, fecha
 CREATE SQL VIEW VistaPuntosVencidos REMOTE CONNECTION ConexionICG as select * from EXTRACTOPROMOCIONESTARJETA where fecha>=?m.desde AND fecha<?m.hasta AND SUBSTRing(descripcion,1,15)='PUNTOS VENCIDOS'
 CREATE SQL VIEW vistaCobros REMOTE CONNECTION ConexionICG as select * from Tesoreria where fechaSaldado>=?m.desde AND fechaSaldado<=?m.hasta AND comentario<>'' AND origen='C' AND tipodocumento='F'
@@ -24,7 +28,7 @@ CREATE SQL VIEW VistaCuadreCaja as select Temporal.fecha, Temporal.sucursal, sum
  CREATE SQL VIEW VistaConceptosDto REMOTE CONNECTION ConexionICG AS SELECT * from cargosDtos
  CREATE SQL VIEW VistaArticulos REMOTE CONNECTION ConexionICG AS SELECT codArticulo, marca, dpto, seccion, descripcion from articulos
  
- CREATE SQL VIEW VistaVentas REMOTE CONNECTION ConexionICG AS SELECT Albventacab.NUMSERIE, Albventacab.NUMALBARAN, Albventacab.N, Albventacab.FECHA, precio, unidadespagadas, dto, total, iva, precioIva, tipoimpuesto, albVentaLin.codArticulo, caja, Albventacab.TOTALBRUTO, Albventacab.TOTALIMPUESTOS, albventalin.coste,  Albventacab.TOTALNETO, coste as precioDefecto, Albventacab.totDtoComercial, Albventacab.dtoComercial, ultimoCoste, unidadesTotal, fvsr.numeroFiscal, codCliente, codAlmacen, puntosacum, numlin ;
+ CREATE SQL VIEW VistaVentas REMOTE CONNECTION ConexionICG AS SELECT Albventacab.NUMSERIE, Albventacab.NUMALBARAN, Albventacab.N, Albventacab.FECHA, precio, unidadespagadas, dto, total, iva, precioIva, tipoimpuesto, albVentaLin.codArticulo, caja, Albventacab.TOTALBRUTO, Albventacab.TOTALIMPUESTOS, albventalin.coste,  Albventacab.TOTALNETO, coste as precioDefecto, Albventacab.totDtoComercial, Albventacab.dtoComercial, ultimoCoste, unidadesTotal, fvsr.numeroFiscal, codCliente, codAlmacen, puntosacum, numlin, sala ;
  FROM dbo.ALBVENTACAB Albventacab left outer join dbo.ALBVENTALIN Albventalin  ON Albventalin.NUMSERIE = Albventacab.NUMSERIE AND Albventalin.NUMALBARAN = Albventacab.NUMALBARAN   left outer join dbo.ARTICULOSLIN ON AlbVentaLin.codArticulo=ArticulosLin.codArticulo AND AlbVentaLin.talla=ArticulosLin.talla AND AlbVentaLin.color=ArticulosLin.color left outer join dbo.facturasVentaSeriesResol fvsr on Albventacab.numseriefac=fvsr.numSerie AND Albventacab.numfac=fvsr.numfactura  WHERE Albventacab.fecha >= ?m.desde AND Albventacab.fecha <= ?m.hasta 
  
  CREATE SQL VIEW VistaPagos REMOTE CONNECTION ConexionICG AS SELECT fecha, tesoreria.serie, numero, tesoreria.n, totalbruto, totalimpuestos, totalneto, totalcoste, ivaincluido, totalcosteiva, codformapago, importe, codtipopago, base, caja, clientes.cif, clientes.codCliente, numfac, nombrecliente, fvsr.numeroFiscal  FROM dbo.ALBVENTACAB Albventacab left outer join dbo.TESORERIA TESORERIA  ON TESORERIA.SERIE = Albventacab.NUMSERIE AND TESORERIA.NUMERO = Albventacab.NUMALBARAN  left outer join dbo.clientes on albVentaCab.codCliente=clientes.codCliente  left outer join dbo.facturasVentaSeriesResol fvsr on Albventacab.numseriefac=fvsr.numSerie AND Albventacab.numfac=fvsr.numfactura  WHERE Albventacab.fecha >= ?m.desde AND Albventacab.fecha <= ?m.hasta 

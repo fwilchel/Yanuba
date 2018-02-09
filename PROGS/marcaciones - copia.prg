@@ -50,7 +50,7 @@
  
  COPY TO ResumenExtras.xls TYPE XLS
  SELECT extras
- REPLACE rn WITH redondear2(rn) ALL		
+ REPLACE rn WITH redondear2(rn) ALL
  REPLACE rnf WITH redondear2(rnf) ALL
  REPLACE hed WITH redondear2(hed) ALL
  REPLACE hen WITH redondear2(hen) ALL
@@ -78,9 +78,9 @@ PROCEDURE he
     IF TTOD(m.entrada)<>TTOD(m.salida)
        IF (MINUTE(m.salida)=0 .OR. MINUTE(m.salida)=15 .OR. MINUTE(m.salida)=30 .OR. MINUTE(m.salida)=45 .OR. m.caja='B5')
           IF esfestivo(TTOD(m.entrada))
-             REPLACE hefd WITH hefd+tiempointerseccion(m.finturno, m.salida, 6, 21, TTOD(m.entrada))
+             REPLACE hefd WITH hefd+tiempointerseccion(m.finturno, m.salida, 6, 22, TTOD(m.entrada))
           ELSE
-             REPLACE hed WITH hed+tiempointerseccion(m.finturno, m.salida, 6, 21, TTOD(m.entrada))
+             REPLACE hed WITH hed+tiempointerseccion(m.finturno, m.salida, 6, 22, TTOD(m.entrada))
           ENDIF
           IF esfestivo(TTOD(m.entrada))
              REPLACE hefn WITH hefn+tiempointerseccion(m.finturno, m.salida, 0, 6, TTOD(m.entrada))
@@ -88,14 +88,14 @@ PROCEDURE he
              REPLACE hen WITH hen+tiempointerseccion(m.finturno, m.salida, 0, 6, TTOD(m.entrada))
           ENDIF
           IF esfestivo(TTOD(m.entrada))
-             REPLACE hefn WITH hefn+tiempointerseccion(m.finturno, m.salida, 21, 24, TTOD(m.entrada))
+             REPLACE hefn WITH hefn+tiempointerseccion(m.finturno, m.salida, 22, 24, TTOD(m.entrada))
           ELSE
-             REPLACE hen WITH hen+tiempointerseccion(m.finturno, m.salida, 21, 24, TTOD(m.entrada))
+             REPLACE hen WITH hen+tiempointerseccion(m.finturno, m.salida, 22, 24, TTOD(m.entrada))
           ENDIF
           IF esfestivo(TTOD(m.salida))
-             REPLACE hefd WITH hefd+tiempointerseccion(m.finturno, m.salida, 6, 21, TTOD(m.salida))
+             REPLACE hefd WITH hefd+tiempointerseccion(m.finturno, m.salida, 6, 22, TTOD(m.salida))
           ELSE
-             REPLACE hed WITH hed+tiempointerseccion(m.finturno, m.salida, 6, 21, TTOD(m.salida))
+             REPLACE hed WITH hed+tiempointerseccion(m.finturno, m.salida, 6, 22, TTOD(m.salida))
           ENDIF
           IF esfestivo(TTOD(m.salida))
              REPLACE hefn WITH hefn+tiempointerseccion(m.finturno, m.salida, 0, 6, TTOD(m.salida))
@@ -103,17 +103,17 @@ PROCEDURE he
              REPLACE hen WITH hen+tiempointerseccion(m.finturno, m.salida, 0, 6, TTOD(m.salida))
           ENDIF
           IF esfestivo(TTOD(m.salida))
-             REPLACE hefn WITH hefn+tiempointerseccion(m.finturno, m.salida, 21, 24, TTOD(m.salida))
+             REPLACE hefn WITH hefn+tiempointerseccion(m.finturno, m.salida, 22, 24, TTOD(m.salida))
           ELSE
-             REPLACE hen WITH hen+tiempointerseccion(m.finturno, m.salida, 21, 24, TTOD(m.salida))
+             REPLACE hen WITH hen+tiempointerseccion(m.finturno, m.salida, 22, 24, TTOD(m.salida))
           ENDIF
        ENDIF
     ELSE
        IF (MINUTE(m.salida)=0 .OR. MINUTE(m.salida)=15 .OR. MINUTE(m.salida)=30 .OR. MINUTE(m.salida)=45 .OR. m.caja='B5')
           IF esfestivo(TTOD(m.entrada))
-             REPLACE hefd WITH hefd+tiempointerseccion(m.finturno, m.salida, 6, 21, TTOD(m.entrada))
+             REPLACE hefd WITH hefd+tiempointerseccion(m.finturno, m.salida, 6, 22, TTOD(m.entrada))
           ELSE
-             REPLACE hed WITH hed+tiempointerseccion(m.finturno, m.salida, 6, 21, TTOD(m.entrada))
+             REPLACE hed WITH hed+tiempointerseccion(m.finturno, m.salida, 6, 22, TTOD(m.entrada))
           ENDIF
           IF esfestivo(TTOD(m.entrada))
              REPLACE hefn WITH hefn+tiempointerseccion(m.finturno, m.salida, 0, 6, TTOD(m.entrada))
@@ -121,9 +121,9 @@ PROCEDURE he
              REPLACE hen WITH hen+tiempointerseccion(m.finturno, m.salida, 0, 6, TTOD(m.entrada))
           ENDIF
           IF esfestivo(TTOD(m.entrada))
-             REPLACE hefn WITH hefn+tiempointerseccion(m.finturno, m.salida, 21, 24, TTOD(m.entrada))
+             REPLACE hefn WITH hefn+tiempointerseccion(m.finturno, m.salida, 22, 24, TTOD(m.entrada))
           ELSE
-             REPLACE hen WITH hen+tiempointerseccion(m.finturno, m.salida, 21, 24, TTOD(m.entrada))
+             REPLACE hen WITH hen+tiempointerseccion(m.finturno, m.salida, 22, 24, TTOD(m.entrada))
           ENDIF
        ENDIF
     ENDIF
@@ -136,14 +136,14 @@ PROCEDURE hf
  m.tiempo = 0
  IF TTOD(m.entrada)<>TTOD(m.salida)
     IF esfestivo(TTOD(m.entrada))
-       REPLACE hf WITH tiempointerseccion(m.entrada, m.salida, 6, 21, TTOD(m.entrada))
+       REPLACE hf WITH tiempointerseccion(m.entrada, m.salida, 6, 22, TTOD(m.entrada))
     ENDIF
     IF esfestivo(TTOD(m.salida))
-       REPLACE hf WITH hf+tiempointerseccion(m.entrada, m.salida, 6, 21, TTOD(m.salida))
+       REPLACE hf WITH hf+tiempointerseccion(m.entrada, m.salida, 6, 22, TTOD(m.salida))
     ENDIF
  ELSE
     IF esfestivo(TTOD(m.entrada))
-       REPLACE hf WITH tiempointerseccion(m.entrada, m.salida, 6, 21, TTOD(m.entrada))
+       REPLACE hf WITH tiempointerseccion(m.entrada, m.salida, 6, 22, TTOD(m.entrada))
     ENDIF
  ENDIF
  IF hf>8
@@ -342,7 +342,7 @@ FUNCTION calcularrn
  m.ano = YEAR(entrada)
  m.hora = HOUR(entrada)
  m.minuto = MINUTE(entrada)
- m.inicio = CTOT(ALLTRIM(STR(m.dia))+"/"+ALLTRIM(STR(m.mes))+"/"+ALLTRIM(STR(m.ano))+" 21:00:00")
+ m.inicio = CTOT(ALLTRIM(STR(m.dia))+"/"+ALLTRIM(STR(m.mes))+"/"+ALLTRIM(STR(m.ano))+" 22:00:00")
  m.fin = m.inicio+028800
  IF (m.finturno>m.inicio .AND. m.finturno<=m.fin) .OR. (m.entrada>=m.inicio .AND. m.entrada<m.fin)
     IF m.entrada<m.inicio .AND. m.finturno>m.inicio

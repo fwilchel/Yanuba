@@ -1,14 +1,85 @@
  OPEN DATABASE data\interfaz
  SET EXCLUSIVE ON
 
+ CREATE SQL VIEW VistaPagosCaja REMOTE CONNECTION conexionICG AS select caja, numero, fecha, importe, comentario, codmediopago, codconceptopago, tipomovcaja, z from pagos where fecha>=?m.desde AND fecha<=?m.hasta
+ CREATE SQL VIEW VistaPlanilla REMOTE CONNECTION ConexionICG as select * from pagos where fecha>=?m.desde and fecha<=?m.hasta AND (codconceptopago=2 OR codconceptopago=3)
+ CREATE SQL VIEW vistaCobros REMOTE CONNECTION ConexionICG as select * from Tesoreria where fechaSaldado>=?m.desde AND fechaSaldado<=?m.hasta AND comentario<>'' AND origen='C' AND tipodocumento='F'
+
+CLOSE TABLE ALL
+RETURN
+
+ CREATE SQL VIEW VistaVendedores REMOTE CONNECTION conexionICG AS SELECT codVendedor, nomvendedor, activo, codalmacen, descatalogado, numssocial from vendedores
+ = DBSETPROP("VistaVendedores.nomvendedor", "Field", "DataType", "c(100)")
+
+
+ALTER TABLE config ADD COLUMN centro_costo_domicilios c(8)
+
+ CREATE SQL VIEW VistaVentas REMOTE CONNECTION ConexionICG AS SELECT Albventacab.NUMSERIE, Albventacab.NUMALBARAN, Albventacab.N, Albventacab.FECHA, precio, unidadespagadas, dto, total, iva, precioIva, tipoimpuesto, albVentaLin.codArticulo, caja, Albventacab.TOTALBRUTO, Albventacab.TOTALIMPUESTOS, albventalin.coste,  Albventacab.TOTALNETO, coste as precioDefecto, Albventacab.totDtoComercial, Albventacab.dtoComercial, ultimoCoste, unidadesTotal, fvsr.numeroFiscal, codCliente, codAlmacen, puntosacum, numlin, sala ;
+ FROM dbo.ALBVENTACAB Albventacab left outer join dbo.ALBVENTALIN Albventalin  ON Albventalin.NUMSERIE = Albventacab.NUMSERIE AND Albventalin.NUMALBARAN = Albventacab.NUMALBARAN   left outer join dbo.ARTICULOSLIN ON AlbVentaLin.codArticulo=ArticulosLin.codArticulo AND AlbVentaLin.talla=ArticulosLin.talla AND AlbVentaLin.color=ArticulosLin.color left outer join dbo.facturasVentaSeriesResol fvsr on Albventacab.numseriefac=fvsr.numSerie AND Albventacab.numfac=fvsr.numfactura  WHERE Albventacab.fecha >= ?m.desde AND Albventacab.fecha <= ?m.hasta 
+
+
+
+CREATE SQL VIEW VistaPuntos REMOTE CONNECTION ConexionICG as SELECT cast(Clientes.CODCLIENTE as int) as codcliente, Clientes.NOMBRECLIENTE;
+ FROM dbo.CLIENTES Clientes;
+ WHERE Clientes.NOMBRECLIENTE LIKE 'PUNTO%'
+
+ = DBSETPROP("VistaPuntos.nombrecliente", "Field", "DataType", "c(100)")
+ = DBSETPROP("VistaPuntos",  "View", "SendUpdates", .t.)
+
+
+USE vistaPuntos
+BROWSE
+
+
+
+
+*!*	USE vistapuntos
+*!*	DISPLAY STRUCTURE
+*!*	USE almacenes
+*!*	DISPLAY STRUCTURE
+
+ = DBSETPROP("VistaPuntos.nombrecliente", "Field", "DataType", "c(100)")
+ = DBSETPROP("VistaPuntos",  "View", "SendUpdates", .t.)
+ = DBSETPROP("VistaAlmacenes",  "View", "SendUpdates", .t.)
+ = DBSETPROP("VistaTraslados",  "View", "SendUpdates", .t.)
+ = DBSETPROP("VistaPuntos.nombrecliente", "Field", "DataType", "c(100)")
+ = DBSETPROP("VistaVendedores.nomvendedor", "Field", "DataType", "c(100)")
+ = DBSETPROP("VistaPuntos.nombrecliente", "Field", "DataType", "c(100)")
+
+ CREATE SQL VIEW VistaConceptosPago REMOTE CONNECTION ConexionICG AS select id, descripcion from conceptospago where movcaja='T'
+ = DBSETPROP("VistaConceptosPago",  "View", "SendUpdates", .t.)
+ 
+
+
+
+ 
+
+USE traslados
+INDEX ON almacenorigen+almacendestino TAG almacenes
+
+CREATE SQL VIEW VistaAlmacenes REMOTE CONNECTION ConexionICG as Select * from Almacen
+
+CREATE SQL VIEW VistaPuntos REMOTE CONNECTION ConexionICG as SELECT Clientes.CODCLIENTE, Clientes.NOMBRECLIENTE;
+ FROM dbo.CLIENTES Clientes;
+ WHERE Clientes.NOMBRECLIENTE LIKE 'PUNTO%'
+ 
+
+
+*!*	 MODIFY VIEW VistaAlmacenes
+*!*	 MODIFY VIEW VistaPuntos
+*!*	 MODIFY VIEW VistaTraslados
+
+ALTER TABLE almacenes alter COLUMN codcliente i null
+
+CREATE SQL VIEW VistaAlmacenes REMOTE CONNECTION ConexionICG as Select * from Almacen
+
+CREATE SQL VIEW VistaPuntos REMOTE CONNECTION ConexionICG as SELECT Clientes.CODCLIENTE, Clientes.NOMBRECLIENTE;
+ FROM dbo.CLIENTES Clientes;
+ WHERE Clientes.NOMBRECLIENTE LIKE 'PUNTO%'
+ 
+
+ALTER TABLE almacenes alter COLUMN codcliente c(6) null
 ALTER TABLE horas ADD COLUMN cc c(5)
-
-
-
- 
- 
- CLOSE TABLE ALL
- RETURN
 
 ALTER TABLE almacenes ADD COLUMN co c(3)
 REPLACE co WITH "017" FOR ALLTRIM(codalmacen)=="B1"
@@ -28,20 +99,21 @@ INDEX ON codalmacen TAG almacen
  m.desde = DATE()
  m.hasta = DATE()
 
- = DBSETPROP("VistaVendedores.nomvendedor", "Field", "DataType", "c(100)")
- = DBSETPROP("VistaPuntos.nombrecliente", "Field", "DataType", "c(100)")
 
 
 
 CREATE SQL VIEW VistaTarjetas REMOTE CONNECTION ConexionICG as SELECT clientes.codcliente, nif20, idtarjeta from tarjetas inner join clientes on tarjetas.codcliente=clientes.codcliente
 
 CREATE SQL VIEW VistaPuntosPromociones REMOTE CONNECTION ConexionICG as select * from EXTRACTOPROMOCIONESTARJETA  order by idtarjeta, fecha
+
+
+
 CREATE TABLE puntos (idlinea i(4), idtarjeta i(4), caja c(3), fecha datetime, descripcion c(50), puntos i(4), gastados i(4))
 CREATE TABLE puntosAplicados (idlinea1 i(4), idlinea2 i(4), idtarjeta i(4), caja c(3), fecha datetime, descripcion c(50), puntosAplicados i(4))
 
 
 
- CREATE SQL VIEW VistaConceptosPago REMOTE CONNECTION ConexionICG AS select id, descripcion from conceptospago where movcaja='T'
+
  CREATE SQL VIEW VistaConceptosDto REMOTE CONNECTION ConexionICG AS SELECT * from cargosDtos
  CREATE SQL VIEW VistaAlmacenes REMOTE CONNECTION ConexionICG AS SELECT * from almacen
   CREATE SQL VIEW VistaPagosCaja REMOTE CONNECTION conexionICG AS select caja, numero, fecha, importe, comentario, codmediopago, codconceptopago, tipomovcaja, z from pagos where fecha>=?m.desde AND fecha<=?m.hasta

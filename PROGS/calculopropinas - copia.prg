@@ -95,20 +95,11 @@ USE
  
  
  && Consulta de las propinas recibidas, por vendedor y almacen del vendedor y de la propina, y se quita el 4/1000
- USE vistapropinas2
- SELECT 0
- USE vistaVendedores
- SELECT 0
- USE vendedores
-
  SELECT SUBSTR(caja, 1, 2) AS caja, vp2.codvendedor, vv.nomvendedor, v.codalmacen, SUM(propina), SUM(propina-propina*4/1000) AS propina_4_mil ;
  FROM vistapropinas2 AS vp2 LEFT JOIN vistavendedores AS vv ON vp2.codvendedor=vv.codvendedor LEFT JOIN vendedores AS v ON vp2.codvendedor=v.id ;
- GROUP BY 1,2,3,4 ORDER BY 1, 3 INTO CURSOR ps
-
-  
+ GROUP BY 1, 2, 3, 4 ORDER BY 1, 3 INTO CURSOR ps
  
  && Propinas de otras calles. caja<>codalmacen
- 
  SELECT caja, codalmacen, SUM(sum_propina), SUM(propina_4_mil) AS propina4mil ;
  FROM ps WHERE caja<>codalmacen AND propina_4_mil<>0 ;
  GROUP BY 1, 2 INTO CURSOR otrascalles
@@ -129,7 +120,7 @@ USE
  
  && Lo que queda de propinas en cada almacén luego de quitar 4/100 y sumando y restando de otras calles
  SELECT caja, SUM(sum_propina), SUM(propina_4_mil) AS propina4mil, mas, menos;
-  FROM ps LEFT JOIN otrascalles3 AS oc ON ALLTRIM(ps.caja)=ALLTRIM(oc.codalmacen) ;
+  FROM ps LEFT JOIN otrascalles3 AS oc ON ALLTRIM(ps.caja)=ALLTRIM(oc.codalmacen);
    GROUP BY 1 INTO CURSOR propinasPoralmacen
    
    
@@ -184,7 +175,7 @@ USE
   FROM porcentajes AS p LEFT JOIN roles AS r ON r.id=p.rol LEFT JOIN almacenes AS a ON a.codalmacen=p.codalmacen ;
   LEFT JOIN paso2 AS p2 ON p2.codalmacen=p.codalmacen AND p2.codrol=p.rol;
    LEFT JOIN propinasPoralmacen AS ppa ON p.codalmacen=ppa.caja;
-  WHERE horas>0 OR p.rol=2 ;
+  WHERE horas>0 OR p.rol=2;
   GROUP BY p.codalmacen, p.rol;
   ORDER BY p.codalmacen, codrol;
   INTO CURSOR paso3
@@ -208,7 +199,7 @@ USE
  
  
  SELECT p1.codalm AS codalmacen, SUM(IIF(codrol=22 OR codrol=8, horas, horas/2)) AS sum_horas;
-  FROM paso1 AS p1 WHERE (p1.codrol=22 OR p1.codrol=30 OR p1.codrol=8) AND codalmacenbase=codalm ;
+  FROM paso1 AS p1 WHERE (p1.codrol=22 OR p1.codrol=30 OR p1.codrol=8) AND codalmacenbase=codalm;
    GROUP BY 1 INTO CURSOR personalBase
  
  SELECT pb.codalmacen, pb.sum_horas, pa.propina4mil, p4.restante, propina4mil*restante/100/sum_horas AS valor_hora;
@@ -232,13 +223,13 @@ USE
  
  SELECT p1.cedula, p1.nombre, p1.codrol, p1.nombrerol, p1.codalmacenbase, p1.nombrealmacenbase, p1.codalm, p1.nombrealmacen, p1.horas, p3.valor_hora, p1.horas*p3.valor_hora AS propina, factor;
   FROM paso1 AS p1 LEFT JOIN vlrHoraRol22 AS p3 ON p1.codalm=p3.codalmacen LEFT JOIN factores ON p1.codrol=factores.codrol;
-   WHERE p1.codalm<>'B5' AND p1.codalmacenbase<>'B5' AND p1.codalm<>'B7' AND p1.codalmacenbase<>'B7' AND p1.codalm<>'B8' AND p1.codalmacenbase<>'B8' AND codalmacenbase<>codalm AND p1.codrol<>4 AND p1.codrol<>3 AND p1.codrol<>1 AND p1.codrol<>39 AND p1.codrol<>38 AND p1.codrol<>12 AND p1.codrol<>18;
+   WHERE p1.codalm<>'B5' AND p1.codalmacenbase<>'B5' AND p1.codalm<>'B7' AND p1.codalmacenbase<>'B7' AND codalmacenbase<>codalm AND p1.codrol<>4 AND p1.codrol<>3 AND p1.codrol<>1 AND p1.codrol<>39 AND p1.codrol<>38 AND p1.codrol<>12 AND p1.codrol<>18;
     INTO CURSOR factores1
 
  COPY TO factores1.xls TYPE XLS
  
  
- SELECT codalm, SUM(horas*factor) AS nuevashoras ;
+ SELECT codalm, SUM(horas*factor) AS nuevashoras;
   FROM factores1 GROUP BY 1 INTO CURSOR factores2
  COPY TO factores2.xls TYPE XLS
  
@@ -254,19 +245,19 @@ USE
  
  SELECT p1.cedula, p1.nombre, p1.codrol, p1.nombrerol, p1.codalmacenbase, p1.nombrealmacenbase, p1.codalm, p1.nombrealmacen, p1.horas, p3.valor_hora, p1.horas*p3.valor_hora AS propina, 1, cc;
   FROM paso1 AS p1 LEFT JOIN paso3 AS p3 ON p1.codalm=p3.codalmacen AND p1.codrol=p3.codrol;
-   WHERE p1.codrol<>21 AND p1.codalm<>'B5' AND p1.codalm<>'B7' AND p1.codalm<>'B8' AND NOT ((p1.codalmacenbase<>'B5' OR p1.codalmacenbase<>'B7' OR p1.codalmacenbase<>'B8') AND codalmacenbase<>codalm AND p1.codrol<>4 AND p1.codrol<>12 AND p1.codrol<>3 AND p1.codrol<>1 AND p1.codrol<>39 AND p1.codrol<>18);
+   WHERE p1.codrol<>21 AND p1.codalm<>'B5' AND p1.codalm<>'B7' AND NOT ((p1.codalmacenbase<>'B5' OR p1.codalmacenbase<>'B7') AND codalmacenbase<>codalm AND p1.codrol<>4 AND p1.codrol<>12 AND p1.codrol<>3 AND p1.codrol<>1 AND p1.codrol<>39 AND p1.codrol<>18);
  UNION ALL;
    SELECT p1.cedula, p1.nombre, p1.codrol, p1.nombrerol, p1.codalmacenbase, p1.nombrealmacenbase, p1.codalm, p1.nombrealmacen, p1.horas, p3.valor_hora, p1.horas*p3.valor_hora AS propina, 2, cc;
     FROM paso1 AS p1 LEFT JOIN paso3 AS p3 ON p1.codalmacenbase=p3.codalmacen AND p1.codrol=p3.codrol;
-     WHERE p1.codrol=21 AND p1.codalm<>'B5' AND p1.codalm<>'B7' AND p1.codalm<>'B8' ;
+     WHERE p1.codrol=21 AND p1.codalm<>'B5' AND p1.codalm<>'B7';
  UNION ALL;
   SELECT p1.cedula, p1.nombre, p1.codrol, p1.nombrerol, p1.codalmacenbase, p1.nombrealmacenbase, p1.codalm, p1.nombrealmacen, IIF(ISNULL(p1.horas*factores.factor),0,p1.horas*factores.factor) AS horas, p3.valorhora, p1.horas*factores.factor*p3.valorhora AS propina, 3, cc ;
   FROM paso1 AS p1 LEFT JOIN factores3 AS p3 ON p1.codalm=p3.codalmacen LEFT JOIN factores ON p1.codrol=factores.codrol ;
-  WHERE p1.codalm<>'B5' AND p1.codalmacenbase<>'B5' AND p1.codalm<>'B7' AND p1.codalmacenbase<>'B7' AND p1.codalm<>'B8' AND p1.codalmacenbase<>'B8' AND codalmacenbase<>codalm AND p1.codrol<>4 AND p1.codrol<>12 AND p1.codrol<>3 AND p1.codrol<>1 AND p1.codrol<>39 AND p1.codrol<>18 AND p1.codrol<>0 AND IIF(ISNULL(p1.horas*factores.factor),0,p1.horas*factores.factor)<>0;
+  WHERE p1.codalm<>'B5' AND p1.codalmacenbase<>'B5' AND p1.codalm<>'B7' AND p1.codalmacenbase<>'B7' AND codalmacenbase<>codalm AND p1.codrol<>4 AND p1.codrol<>12 AND p1.codrol<>3 AND p1.codrol<>1 AND p1.codrol<>39 AND p1.codrol<>18 AND p1.codrol<>0 AND IIF(ISNULL(p1.horas*factores.factor),0,p1.horas*factores.factor)<>0;
  UNION ALL ;
  SELECT p1.cedula, p1.nombre, p1.codrol, p1.nombrerol, p1.codalmacenbase, p1.nombrealmacenbase, p1.codalm, p1.nombrealmacen, p1.horas, m.vlrplantaproduccion*p3.porcentaje/100/p2.horas, m.vlrplantaproduccion*p3.porcentaje/100/p2.horas*p1.horas, 4,cc ;
  FROM paso1 AS p1 LEFT JOIN paso3 AS p3 ON p1.codalm=p3.codalmacen AND p1.codrol=p3.codrol LEFT JOIN paso2 AS p2 ON p2.codalmacen=p1.codalm AND p2.codrol=p1.codrol ;
- WHERE (p3.codalmacen='B5' AND p1.codalm='B5') OR (p3.codalmacen='B7' AND p1.codalm='B7') OR (p3.codalmacen='B8' AND p1.codalm='B8') ORDER BY 5, 2 INTO CURSOR planilla
+ WHERE (p3.codalmacen='B5' AND p1.codalm='B5') OR (p3.codalmacen='B7' AND p1.codalm='B7') ORDER BY 5, 2 INTO CURSOR planilla
 
 *!*	  SELECT p1.cedula, p1.nombre, p1.codrol, p1.nombrerol, p1.codalmacenbase, p1.nombrealmacenbase, p1.codalm, p1.nombrealmacen, p1.horas, p3.valor_hora, p1.horas*p3.valor_hora AS propina ;
 *!*	  FROM paso1 AS p1 LEFT JOIN vlrHoraRol22 AS p3 ON p1.codalm=p3.codalmacen ;

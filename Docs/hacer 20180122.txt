@@ -1,0 +1,10 @@
+sala -1 y sala -2 corresponde a domicilios, poner un centro de costo, debe afectar vlr antes de impuestos, exentos, costos e inventarios
+
+
+1. Parametrizacion de porcentajes por rol, ya no debe hacerse por almacén, sino uno solo para todos
+2. Generar archivo plano para nómina de la venta a empleados
+3. Revisar los traslados, vtas materia prima de insumos a los puntos
+4. 
+
+
+

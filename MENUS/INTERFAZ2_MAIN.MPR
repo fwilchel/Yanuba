@@ -1,12 +1,12 @@
 *       *********************************************************
 *       *                                                         
-*       * 17/05/2017        INTERFAZ2_MAIN.MPR          16:57:46  
+*       * 07/02/2018        INTERFAZ2_MAIN.MPR          21:16:54  
 *       *                                                         
 *       *********************************************************
 *       *                                                         
 *       * Fredy Wilches                                           
 *       *                                                         
-*       * Copyright (C) 2017 Soft Studio Ltda                     
+*       * Copyright (C) 2018 Soft Studio Ltda                     
 *       * ReFox XII  CO125117                                     
 *       * Ciudad,     Código pos                                  
 *       * País                                              
@@ -140,7 +140,6 @@ DEFINE BAR 5 OF _msystem PROMPT "Vistas"
 ON SELECTION BAR 1 OF _msystem goapp.dohelp()
 ON SELECTION BAR 3 OF _msystem goapp.doaboutbox()
 ON SELECTION BAR 4 OF _msystem DO corregir
-ON SELECTION BAR 5 OF _msystem DO vistas
 
 ON SELECTION POPUP _mfile MESSAGEBOX("Característica no disponible.",0,goapp.ccaption)
 ON SELECTION POPUP _mwindow MESSAGEBOX("Característica no disponible.",0,goapp.ccaption)
